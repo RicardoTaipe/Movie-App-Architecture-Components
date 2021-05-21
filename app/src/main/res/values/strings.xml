@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieArchitectureComponents</string>
+    <string name="title_home">Home</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="slide_image">slide_image</string>
+    <string name="popular_movies">POPULAR MOVIES</string>
+    <string name="movie_image">movie_image</string>
+</resources>
