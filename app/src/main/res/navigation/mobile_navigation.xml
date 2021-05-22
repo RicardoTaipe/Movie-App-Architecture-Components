@@ -19,7 +19,11 @@
         android:id="@+id/navigation_movie"
         android:name="com.example.moviearchitecturecomponents.ui.movie.MovieFragment"
         android:label="@string/title_movie"
-        tools:layout="@layout/fragment_movie" />
+        tools:layout="@layout/fragment_movie" >
+        <argument
+            android:name="idMovie"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"

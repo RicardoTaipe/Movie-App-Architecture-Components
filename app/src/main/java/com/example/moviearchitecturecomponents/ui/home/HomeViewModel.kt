@@ -21,7 +21,7 @@ class HomeViewModel : ViewModel() {
 
     private val timer: CountDownTimer
 
-    private val _page = MutableLiveData<Int>(-1)
+    private val _page = MutableLiveData(-1)
     val page: LiveData<Int>
         get() = _page
 
