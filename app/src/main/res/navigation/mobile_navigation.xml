@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.moviearchitecturecomponents.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="@string/title_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_movie"
             app:destination="@id/navigation_movie" />
@@ -21,8 +20,13 @@
         android:label="@string/title_movie"
         tools:layout="@layout/fragment_movie" >
         <argument
-            android:name="idMovie"
-            app:argType="integer" />
+            android:name="selectedMovie"
+            app:argType="com.example.moviearchitecturecomponents.network.response.Result"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_navigation_movie_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment
