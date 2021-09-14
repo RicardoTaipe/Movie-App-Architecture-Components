@@ -3,13 +3,13 @@ package com.example.moviearchitecturecomponents.ui.home
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviearchitecturecomponents.databinding.MoviePosterBinding
 import com.example.moviearchitecturecomponents.network.response.Result
-import com.example.moviearchitecturecomponents.ui.slide.SlideAdapter
 
-class PopularMoviesAdapter(val context: Context?) :
+class PopularMoviesAdapter(val context: Context?, val clickListener: MovieClickListener) :
     RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder>() {
     var dataSet = listOf<Result>()
         set(value) {
@@ -24,19 +24,24 @@ class PopularMoviesAdapter(val context: Context?) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(context, dataSet[position])
+        holder.bind(context, dataSet[position], clickListener)
     }
 
     override fun getItemCount() = dataSet.size
 
-    class ViewHolder(val binding: MoviePosterBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(context: Context?, result: Result) {
+    class ViewHolder(private val binding: MoviePosterBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(context: Context?, result: Result, clickListener: MovieClickListener) {
+            ViewCompat.setTransitionName(binding.movieImage, result.id.toString())
+            binding.root.setOnClickListener {
+                clickListener.onClick(result, binding.movieImage)
+            }
             binding.movieTitle.text = result.title
             Glide.with(context!!)
                 .load("https://image.tmdb.org/t/p/original" + result.backdropPath)
                 .into(binding.movieImage)
-            binding.ratingValue.text=result.voteAverage.toString()
-            binding.ratingBar.rating= result.voteAverage?.toFloat()!!.div(2)
+            binding.ratingValue.text = result.voteAverage.toString()
+            binding.ratingBar.rating = result.voteAverage?.toFloat()!!.div(2)
             binding.executePendingBindings()
         }
 

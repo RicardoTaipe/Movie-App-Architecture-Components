@@ -1,8 +1,11 @@
 package com.example.moviearchitecturecomponents.network.response
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Result(
     @Json(name = "adult")
     val adult: Boolean? = null,
@@ -31,5 +34,5 @@ data class Result(
     @Json(name = "vote_average")
     val voteAverage: Double? = null,
     @Json(name = "vote_count")
-    val voteCount: Int? = null
-)
+    val voteCount: Int? = null,
+) : Parcelable

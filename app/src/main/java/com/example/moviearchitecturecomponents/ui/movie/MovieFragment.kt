@@ -4,28 +4,47 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.moviearchitecturecomponents.R
+import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
+import com.bumptech.glide.Glide
+import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 
 class MovieFragment : Fragment() {
 
     private lateinit var movieViewModel: MovieViewModel
+    private lateinit var binding: FragmentMovieBinding
+    val args: MovieFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
+    }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
+        binding = FragmentMovieBinding.inflate(inflater, container, false)
         movieViewModel =
-                ViewModelProvider(this).get(MovieViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_movie, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        movieViewModel.text.observe(viewLifecycleOwner, {
-            textView.text = it
-        })
-        return root
+            ViewModelProvider(this).get(MovieViewModel::class.java)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        ViewCompat.setTransitionName(binding.detailMovieImage, args.selectedMovie?.id.toString())
+        Glide.with(requireContext())
+            .load("https://image.tmdb.org/t/p/original" + args.selectedMovie?.backdropPath)
+            .into(binding.detailMovieImage)
+        startPostponedEnterTransition()
+        binding.executePendingBindings()
     }
 }
