@@ -14,7 +14,7 @@ import com.example.moviearchitecturecomponents.databinding.FragmentHomeBinding
 import com.example.moviearchitecturecomponents.ui.slide.SlideAdapter
 import com.example.moviearchitecturecomponents.util.ZoomOutPageTransformer
 import com.google.android.material.tabs.TabLayoutMediator
-//TODO https://www.behance.net/gallery/83595081/Photo-Play-UI-Kit-For-FREE REDISEGN APP
+//TODO https://www.behance.net/gallery/83595081/Photo-Play-UI-Kit-For-FREE REDESIGN APP
 
 class HomeFragment : Fragment() {
 

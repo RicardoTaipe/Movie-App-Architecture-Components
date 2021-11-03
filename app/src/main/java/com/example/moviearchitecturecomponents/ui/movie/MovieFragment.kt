@@ -13,6 +13,7 @@ import com.example.moviearchitecturecomponents.MainActivity
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
+import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
 
@@ -20,6 +21,7 @@ class MovieFragment : Fragment() {
 
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var binding: FragmentMovieBinding
+    private var selectedMovie: Result? = null
     val args: MovieFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class MovieFragment : Fragment() {
     ): View? {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
         movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        selectedMovie = args.selectedMovie
         return binding.root
     }
 
@@ -44,13 +47,13 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-        ViewCompat.setTransitionName(binding.detailMovieImage, args.selectedMovie?.id.toString())
+        ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
 
-        ImageUtil.setImageFromUrl(binding.detailMovieImage,"${NetworkConstants.IMAGE_URL_PATH}${args.selectedMovie?.backdropPath}")
-        ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,"${NetworkConstants.IMAGE_URL_PATH}${args.selectedMovie?.posterPath}")
+        ImageUtil.setImageFromUrl(binding.detailMovieImage,"${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.backdropPath}")
+        ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,"${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.posterPath}")
 
-        binding.detailMovieTitle.text = args.selectedMovie?.title
-        binding.detailMovieDesc.text = args.selectedMovie?.overview
+        binding.detailMovieTitle.text = selectedMovie?.title
+        binding.detailMovieDesc.text = selectedMovie?.overview
         (activity as MainActivity).setActionBarTitle(args.selectedMovie?.title)
         binding.executePendingBindings()
 
