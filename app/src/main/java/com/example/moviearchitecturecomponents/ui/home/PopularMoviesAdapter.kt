@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.MoviePosterBinding
 import com.example.moviearchitecturecomponents.network.response.Result
 
-class PopularMoviesAdapter(val context: Context?, val clickListener: MovieClickListener) :
+class PopularMoviesAdapter(val context: Context?, private val clickListener: MovieClickListener) :
     RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder>() {
     var dataSet = listOf<Result>()
         set(value) {
@@ -39,8 +40,9 @@ class PopularMoviesAdapter(val context: Context?, val clickListener: MovieClickL
             binding.movieTitle.text = result.title
             Glide.with(context!!)
                 .load("https://image.tmdb.org/t/p/original" + result.backdropPath)
+                .placeholder(R.drawable.image_placeholder)
                 .into(binding.movieImage)
-            binding.ratingValue.text = result.voteAverage.toString()
+            binding.ratingValue.text = result.voteAverage?.toString()
             binding.ratingBar.rating = result.voteAverage?.toFloat()!!.div(2)
             binding.executePendingBindings()
         }

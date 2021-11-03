@@ -46,13 +46,15 @@ class HomeFragment : Fragment() {
         postponeEnterTransition()
         val slides = SlideAdapter(context)
         val movies = PopularMoviesAdapter(context, MovieClickListener { movie, imageView ->
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
+            findNavController()
+                .navigate(HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
                 movie),
-                FragmentNavigatorExtras(imageView to movie.id.toString()))
+                FragmentNavigatorExtras(imageView to movie.id.toString())
+                )
         })
         binding.moviesSlider.adapter = slides
-        binding.popularMovies.adapter = movies
         binding.moviesSlider.setPageTransformer(ZoomOutPageTransformer())
+        binding.popularMovies.adapter = movies
         TabLayoutMediator(binding.indicator, binding.moviesSlider) { _, _ -> }.attach()
 
         homeViewModel.movies.observe(viewLifecycleOwner, {

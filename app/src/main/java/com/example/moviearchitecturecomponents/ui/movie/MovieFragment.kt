@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
+import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 
 class MovieFragment : Fragment() {
@@ -43,6 +44,7 @@ class MovieFragment : Fragment() {
         ViewCompat.setTransitionName(binding.detailMovieImage, args.selectedMovie?.id.toString())
         Glide.with(requireContext())
             .load("https://image.tmdb.org/t/p/original" + args.selectedMovie?.backdropPath)
+            .placeholder(R.drawable.image_placeholder)
             .into(binding.detailMovieImage)
         startPostponedEnterTransition()
         binding.executePendingBindings()
