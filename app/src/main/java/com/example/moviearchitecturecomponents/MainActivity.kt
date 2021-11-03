@@ -32,4 +32,8 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
+    fun setActionBarTitle(title:String?){
+        supportActionBar?.title = title
+    }
+
 }

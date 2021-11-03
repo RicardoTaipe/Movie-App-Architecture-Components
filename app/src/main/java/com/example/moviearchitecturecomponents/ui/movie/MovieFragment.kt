@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
+import com.example.moviearchitecturecomponents.MainActivity
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 
@@ -46,6 +47,13 @@ class MovieFragment : Fragment() {
             .load("https://image.tmdb.org/t/p/original" + args.selectedMovie?.backdropPath)
             .placeholder(R.drawable.image_placeholder)
             .into(binding.detailMovieImage)
+        Glide.with(requireContext())
+            .load("https://image.tmdb.org/t/p/original" + args.selectedMovie?.posterPath)
+            .placeholder(R.drawable.image_placeholder)
+            .into(binding.detailBackgroundMovie)
+        binding.detailMovieTitle.text = args.selectedMovie?.title
+        binding.detailMovieDesc.text=args.selectedMovie?.overview
+        (activity as MainActivity).setActionBarTitle(args.selectedMovie?.title)
         startPostponedEnterTransition()
         binding.executePendingBindings()
     }
