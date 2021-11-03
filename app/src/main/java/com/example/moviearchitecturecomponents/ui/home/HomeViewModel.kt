@@ -1,6 +1,7 @@
 package com.example.moviearchitecturecomponents.ui.home
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -56,6 +57,7 @@ class HomeViewModel : ViewModel() {
             try {
                 val movies = MovieApi.retrofitService.getMovies(BuildConfig.TOKEN, 1)
                 _movies.value = movies
+                Log.d("TAG",movies.toString())
             } catch (t: Throwable) {
                 _status.value = "error" + t.message
             }

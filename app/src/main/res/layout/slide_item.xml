@@ -5,10 +5,6 @@
 
     <data>
 
-        <variable
-            name="slide"
-            type="com.example.moviearchitecturecomponents.network.response.Movie" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

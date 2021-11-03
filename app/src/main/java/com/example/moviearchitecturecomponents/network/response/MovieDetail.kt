@@ -3,7 +3,7 @@ package com.example.moviearchitecturecomponents.network.response
 
 import com.squareup.moshi.Json
 
-data class Movie(
+data class MovieDetail(
     @Json(name = "adult")
     val adult: Boolean? = null,
     @Json(name = "backdrop_path")

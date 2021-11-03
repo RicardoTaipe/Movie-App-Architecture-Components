@@ -5,5 +5,5 @@ import com.squareup.moshi.Json
 
 data class Videos(
     @Json(name = "results")
-    val results: List<Video>? = null
+    val results: List<ResultX>? = null
 )

@@ -3,7 +3,7 @@ package com.example.moviearchitecturecomponents.network.response
 
 import com.squareup.moshi.Json
 
-data class Video(
+data class ResultX(
     @Json(name = "id")
     val id: String? = null,
     @Json(name = "iso_3166_1")
@@ -14,6 +14,10 @@ data class Video(
     val key: String? = null,
     @Json(name = "name")
     val name: String? = null,
+    @Json(name = "official")
+    val official: Boolean? = null,
+    @Json(name = "published_at")
+    val publishedAt: String? = null,
     @Json(name = "site")
     val site: String? = null,
     @Json(name = "size")

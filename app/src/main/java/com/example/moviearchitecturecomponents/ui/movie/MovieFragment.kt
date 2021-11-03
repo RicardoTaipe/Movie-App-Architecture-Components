@@ -1,29 +1,20 @@
 package com.example.moviearchitecturecomponents.ui.movie
 
-import android.animation.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
-import androidx.annotation.AnimatorRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
-import androidx.vectordrawable.graphics.drawable.AnimationUtilsCompat
-import com.bumptech.glide.Glide
 import com.example.moviearchitecturecomponents.MainActivity
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
-import com.google.android.material.animation.AnimatorSetCompat
 
 class MovieFragment : Fragment() {
 
@@ -66,6 +57,10 @@ class MovieFragment : Fragment() {
         startPostponedEnterTransition()
         AnimatorUtils.loadAnimation(context, binding.detailBackgroundMovie, R.animator.scale_animator)
         AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
+
+        movieViewModel.movie.observe(viewLifecycleOwner,{
+
+        })
     }
 
 }
