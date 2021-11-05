@@ -19,10 +19,14 @@ import com.example.moviearchitecturecomponents.util.ImageUtil
 
 class MovieFragment : Fragment() {
 
-    private lateinit var movieViewModel: MovieViewModel
+    private val movieViewModel: MovieViewModel by lazy {
+        ViewModelProvider(this).get(MovieViewModel::class.java)
+    }
     private lateinit var binding: FragmentMovieBinding
-    private var selectedMovie: Result? = null
-    val args: MovieFragmentArgs by navArgs()
+
+    private val selectedMovie: Result? by lazy(LazyThreadSafetyMode.NONE) { args.selectedMovie }
+
+    private val args: MovieFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +42,6 @@ class MovieFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
-        movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
-        selectedMovie = args.selectedMovie
         return binding.root
     }
 
@@ -49,8 +51,10 @@ class MovieFragment : Fragment() {
 
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
 
-        ImageUtil.setImageFromUrl(binding.detailMovieImage,"${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.backdropPath}")
-        ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,"${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.posterPath}")
+        ImageUtil.setImageFromUrl(binding.detailMovieImage,
+            "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.backdropPath}")
+        ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,
+            "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.posterPath}")
 
         binding.detailMovieTitle.text = selectedMovie?.title
         binding.detailMovieDesc.text = selectedMovie?.overview
@@ -58,10 +62,12 @@ class MovieFragment : Fragment() {
         binding.executePendingBindings()
 
         startPostponedEnterTransition()
-        AnimatorUtils.loadAnimation(context, binding.detailBackgroundMovie, R.animator.scale_animator)
+        AnimatorUtils.loadAnimation(context,
+            binding.detailBackgroundMovie,
+            R.animator.scale_animator)
         AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
 
-        movieViewModel.movie.observe(viewLifecycleOwner,{
+        movieViewModel.movie.observe(viewLifecycleOwner, {
 
         })
     }
