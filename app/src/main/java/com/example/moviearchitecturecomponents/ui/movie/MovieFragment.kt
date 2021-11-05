@@ -1,5 +1,6 @@
 package com.example.moviearchitecturecomponents.ui.movie
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.example.moviearchitecturecomponents.MainActivity
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
@@ -16,6 +16,7 @@ import com.example.moviearchitecturecomponents.network.NetworkConstants
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
+import com.google.android.material.transition.MaterialContainerTransform
 
 class MovieFragment : Fragment() {
 
@@ -31,8 +32,12 @@ class MovieFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        //sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = resources.getInteger(R.integer.material_motion_duration_long_1).toLong()
+            scrimColor = Color.TRANSPARENT
+        }
 
     }
 
@@ -47,7 +52,9 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition()
+        //postponeEnterTransition()
+
+        (activity as MainActivity).setActionBarTitle(selectedMovie?.title)
 
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
 
@@ -58,15 +65,20 @@ class MovieFragment : Fragment() {
 
         binding.detailMovieTitle.text = selectedMovie?.title
         binding.detailMovieDesc.text = selectedMovie?.overview
-        (activity as MainActivity).setActionBarTitle(args.selectedMovie?.title)
-        binding.executePendingBindings()
 
-        startPostponedEnterTransition()
+        //startPostponedEnterTransition()
         AnimatorUtils.loadAnimation(context,
             binding.detailBackgroundMovie,
             R.animator.scale_animator)
         AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
 
+        getMovieFromApi()
+
+        binding.executePendingBindings()
+
+    }
+
+    private fun getMovieFromApi() {
         movieViewModel.movie.observe(viewLifecycleOwner, {
 
         })
