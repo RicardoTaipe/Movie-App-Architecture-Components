@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentHomeBinding
 import com.example.moviearchitecturecomponents.network.response.Result
-import com.example.moviearchitecturecomponents.ui.home.PopularMoviesAdapter.PopularMoviesAdapterListener
+import com.example.moviearchitecturecomponents.ui.home.MoviesAdapter.MoviesAdapterListener
 import com.example.moviearchitecturecomponents.ui.home.UpcomingMoviesAdapter.*
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter.SliderAdapterListener
@@ -24,8 +24,8 @@ import com.google.android.material.transition.MaterialElevationScale
 
 //TODO https://www.behance.net/gallery/83595081/Photo-Play-UI-Kit-For-FREE REDESIGN APP
 //https://freebiesui.com/figma-freebies/figma-app-designs/streaming-videos-app-ui-kit/
-class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterListener,
-    UpcomingMoviesAdapterListener {
+class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener
+{
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -35,9 +35,9 @@ class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterList
 
     private val slideAdapter = SlideAdapter(this)
 
-    private val popularMoviesAdapter = PopularMoviesAdapter(this)
+    private val popularMoviesAdapter = MoviesAdapter(this)
 
-    private val upcomingMoviesAdapter = UpcomingMoviesAdapter(this)
+    private val upcomingMoviesAdapter = MoviesAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,11 +103,6 @@ class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterList
         applyTransitions()
         moveToMoviePage(movie, imageView)
 
-    }
-
-    override fun onMovieBannerClicked(movie: Result, imageView: ImageView) {
-        applyTransitions()
-        moveToMoviePage(movie, imageView)
     }
 
     override fun onMovieSlideClicked(movie: Result, imageView: ImageView) {

@@ -10,15 +10,15 @@ import com.example.moviearchitecturecomponents.network.NetworkConstants
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.util.ImageUtil
 
-class PopularMoviesAdapter(private val clickListener: PopularMoviesAdapterListener) :
-    RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder>() {
+class MoviesAdapter(private val clickListener: MoviesAdapterListener) :
+    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     var dataSet = listOf<Result>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    interface PopularMoviesAdapterListener {
+    interface MoviesAdapterListener {
         fun onMovieClicked(movie: Result, imageView: ImageView)
     }
 
@@ -36,7 +36,7 @@ class PopularMoviesAdapter(private val clickListener: PopularMoviesAdapterListen
 
     class ViewHolder(private val binding: MoviePosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(result: Result, clickListener: PopularMoviesAdapterListener) {
+        fun bind(result: Result, clickListener: MoviesAdapterListener) {
             val context = itemView.context;
             ViewCompat.setTransitionName(binding.movieImage, result.id.toString())
             binding.root.setOnClickListener {
