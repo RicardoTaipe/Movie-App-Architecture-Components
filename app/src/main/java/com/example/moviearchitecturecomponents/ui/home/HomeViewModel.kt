@@ -53,7 +53,8 @@ class HomeViewModel : ViewModel() {
     private fun setUpCountDownTimer() = object : CountDownTimer(Long.MAX_VALUE, TWO_SECONDS) {
         override fun onTick(millisUntilFinished: Long) {
             if (_page.value == SPLIT_INDEX) {
-                _page.value = -1
+                _page.value = 0
+                return
             }
             _page.value = _page.value?.plus(1)
         }

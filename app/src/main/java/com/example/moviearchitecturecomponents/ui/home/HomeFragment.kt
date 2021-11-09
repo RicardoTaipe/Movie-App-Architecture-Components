@@ -15,7 +15,6 @@ import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentHomeBinding
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.home.MoviesAdapter.MoviesAdapterListener
-import com.example.moviearchitecturecomponents.ui.home.UpcomingMoviesAdapter.*
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter.SliderAdapterListener
 import com.example.moviearchitecturecomponents.util.ZoomOutPageTransformer
