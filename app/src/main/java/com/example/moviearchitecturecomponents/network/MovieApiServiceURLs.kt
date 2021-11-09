@@ -8,8 +8,9 @@ import retrofit2.http.Query
 
 interface MovieApiService {
 
-    @GET("movie/popular")
+    @GET("movie/{release_type}")
     suspend fun getMovies(
+        @Path("release_type") type: String,
         @Query("api_key") token: String, @Query("page") page: Int,
     ): Movies
 

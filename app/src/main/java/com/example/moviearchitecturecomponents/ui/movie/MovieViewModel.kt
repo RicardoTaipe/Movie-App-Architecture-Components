@@ -30,6 +30,7 @@ class MovieViewModel : ViewModel() {
             try {
                 val movie = MovieApi.retrofitService.getMovieById(580489,BuildConfig.TOKEN, "videos,credits")
                 _movie.value = movie
+
             } catch (t: Throwable) {
                 //https://api.themoviedb.org/3/movie/580489?api_key=6{API_KEY}&append_to_response=videos,credits
             }

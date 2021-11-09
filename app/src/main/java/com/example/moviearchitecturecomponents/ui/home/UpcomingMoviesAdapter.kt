@@ -10,16 +10,16 @@ import com.example.moviearchitecturecomponents.network.NetworkConstants
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.util.ImageUtil
 
-class PopularMoviesAdapter(private val clickListener: PopularMoviesAdapterListener) :
-    RecyclerView.Adapter<PopularMoviesAdapter.ViewHolder>() {
+class UpcomingMoviesAdapter(private val clickListener: UpcomingMoviesAdapterListener) :
+    RecyclerView.Adapter<UpcomingMoviesAdapter.ViewHolder>() {
     var dataSet = listOf<Result>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    interface PopularMoviesAdapterListener {
-        fun onMovieClicked(movie: Result, imageView: ImageView)
+    interface UpcomingMoviesAdapterListener {
+        fun onMovieBannerClicked(movie: Result, imageView: ImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,11 +36,11 @@ class PopularMoviesAdapter(private val clickListener: PopularMoviesAdapterListen
 
     class ViewHolder(private val binding: MoviePosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(result: Result, clickListener: PopularMoviesAdapterListener) {
+        fun bind(result: Result, clickListener: UpcomingMoviesAdapterListener) {
             val context = itemView.context;
             ViewCompat.setTransitionName(binding.movieImage, result.id.toString())
             binding.root.setOnClickListener {
-                clickListener.onMovieClicked(result, binding.movieImage)
+                clickListener.onMovieBannerClicked(result, binding.movieImage)
             }
             binding.movieTitle.text = result.title
             ImageUtil.setImageFromUrl(binding.movieImage,

@@ -24,7 +24,7 @@ class SlideAdapter(private val clickListener: SliderAdapterListener) :
         }
 
     interface SliderAdapterListener {
-        fun onMovieClicked(movie: Result, imageView: ImageView)
+        fun onMovieSlideClicked(movie: Result, imageView: ImageView)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -52,7 +52,7 @@ class SlideAdapter(private val clickListener: SliderAdapterListener) :
                 slideTitle.text = slide.title
 
                 root.setOnClickListener {
-                    clickListener.onMovieClicked(slide, binding.slideImage)
+                    clickListener.onMovieSlideClicked(slide, binding.slideImage)
                 }
 
                 ImageUtil.setImageFromUrl(slideImage,

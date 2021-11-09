@@ -15,6 +15,7 @@ import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentHomeBinding
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.home.PopularMoviesAdapter.PopularMoviesAdapterListener
+import com.example.moviearchitecturecomponents.ui.home.UpcomingMoviesAdapter.*
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter.SliderAdapterListener
 import com.example.moviearchitecturecomponents.util.ZoomOutPageTransformer
@@ -22,8 +23,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialElevationScale
 
 //TODO https://www.behance.net/gallery/83595081/Photo-Play-UI-Kit-For-FREE REDESIGN APP
-
-class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterListener {
+//https://freebiesui.com/figma-freebies/figma-app-designs/streaming-videos-app-ui-kit/
+class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterListener,
+    UpcomingMoviesAdapterListener {
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -34,6 +36,8 @@ class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterList
     private val slideAdapter = SlideAdapter(this)
 
     private val popularMoviesAdapter = PopularMoviesAdapter(this)
+
+    private val upcomingMoviesAdapter = UpcomingMoviesAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,14 +66,23 @@ class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterList
             moviesSlider.adapter = slideAdapter
             moviesSlider.setPageTransformer(ZoomOutPageTransformer())
             popularMovies.adapter = popularMoviesAdapter
+            upcomingMovies.adapter = upcomingMoviesAdapter
             TabLayoutMediator(indicator, moviesSlider) { _, _ -> }.attach()
         }
 
-        setupMovieSelectedObserver()
+        setupPopularMoviesObserver()
+        setupUpcomingMoviesObserver()
         setupSliderObserver()
     }
 
-    private fun setupMovieSelectedObserver() {
+    private fun setupUpcomingMoviesObserver() {
+
+        homeViewModel.upcomingMovies.observe(viewLifecycleOwner, {
+            upcomingMoviesAdapter.dataSet = it.results!!
+        })
+    }
+
+    private fun setupPopularMoviesObserver() {
 
         homeViewModel.movies.observe(viewLifecycleOwner, {
             slideAdapter.dataSet = it.results?.subList(0, HomeViewModel.SPLIT_INDEX)!!
@@ -85,14 +98,19 @@ class HomeFragment : Fragment(), PopularMoviesAdapterListener, SliderAdapterList
         })
     }
 
-    override fun onMovieBannerClicked(movie: Result, imageView: ImageView) {
+    override fun onMovieClicked(movie: Result, imageView: ImageView) {
 
         applyTransitions()
         moveToMoviePage(movie, imageView)
 
     }
 
-    override fun onMovieClicked(movie: Result, imageView: ImageView) {
+    override fun onMovieBannerClicked(movie: Result, imageView: ImageView) {
+        applyTransitions()
+        moveToMoviePage(movie, imageView)
+    }
+
+    override fun onMovieSlideClicked(movie: Result, imageView: ImageView) {
 
         applyTransitions()
         moveToMoviePage(movie, imageView)

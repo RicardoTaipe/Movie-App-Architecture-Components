@@ -18,6 +18,8 @@ class HomeViewModel : ViewModel() {
     companion object {
         private const val TWO_SECONDS = 2000L
         const val SPLIT_INDEX = 5
+        const val POPULAR = "popular"
+        const val UPCOMING = "upcoming"
     }
 
     private val timer: CountDownTimer
@@ -34,30 +36,49 @@ class HomeViewModel : ViewModel() {
     val movies: LiveData<Movies>
         get() = _movies
 
+    private val _upcomingMovies = MutableLiveData<Movies>()
+    val upcomingMovies: LiveData<Movies>
+        get() = _upcomingMovies
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
-        getMovies()
-        timer = object : CountDownTimer(Long.MAX_VALUE, TWO_SECONDS) {
-            override fun onTick(millisUntilFinished: Long) {
-                if (_page.value == SPLIT_INDEX) {
-                    _page.value = -1
-                }
-                _page.value = _page.value?.plus(1)
-            }
-
-            override fun onFinish() {}
-        }
+        getPopularMovies()
+        getUpcomingMovies()
+        timer = setUpCountDownTimer()
         timer.start()
     }
 
-    private fun getMovies() {
+    private fun setUpCountDownTimer() = object : CountDownTimer(Long.MAX_VALUE, TWO_SECONDS) {
+        override fun onTick(millisUntilFinished: Long) {
+            if (_page.value == SPLIT_INDEX) {
+                _page.value = -1
+            }
+            _page.value = _page.value?.plus(1)
+        }
+        override fun onFinish() {}
+    }
+
+    private fun getPopularMovies() {
         coroutineScope.launch {
             try {
-                val movies = MovieApi.retrofitService.getMovies(BuildConfig.TOKEN, 1)
+                val movies = MovieApi.retrofitService.getMovies(POPULAR, BuildConfig.TOKEN, 1)
                 _movies.value = movies
-                Log.d("TAG",movies.toString())
+                Log.d("TAG", movies.toString())
+            } catch (t: Throwable) {
+                _status.value = "error" + t.message
+                Log.d("TAG", t.toString())
+            }
+        }
+    }
+
+    private fun getUpcomingMovies() {
+        coroutineScope.launch {
+            try {
+                val movies = MovieApi.retrofitService.getMovies(UPCOMING, BuildConfig.TOKEN, 1)
+                _upcomingMovies.value = movies
+                Log.d("TAG", movies.toString())
             } catch (t: Throwable) {
                 _status.value = "error" + t.message
             }
