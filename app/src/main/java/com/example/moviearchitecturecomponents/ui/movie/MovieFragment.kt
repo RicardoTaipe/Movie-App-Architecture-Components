@@ -54,8 +54,6 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //postponeEnterTransition()
 
-        (activity as MainActivity).setActionBarTitle(selectedMovie?.title)
-
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
 
         ImageUtil.setImageFromUrl(binding.detailMovieImage,

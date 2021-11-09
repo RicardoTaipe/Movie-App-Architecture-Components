@@ -9,7 +9,6 @@ import androidx.navigation.ui.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navHostFragment: NavHostFragment;
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,22 +17,8 @@ class MainActivity : AppCompatActivity() {
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        NavigationUI.setupActionBarWithNavController(this, navController)
-//        val appBarConfiguration = AppBarConfiguration(setOf(
-//            R.id.navigation_home, R.id.navigation_movie, R.id.navigation_notifications))
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = navHostFragment.navController
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
-
-    fun setActionBarTitle(title:String?){
-        supportActionBar?.title = title
-    }
 
 }
