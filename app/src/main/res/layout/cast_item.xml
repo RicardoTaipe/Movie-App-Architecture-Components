@@ -10,7 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
         android:background="@color/primary">
 
         <ImageView
@@ -28,11 +27,7 @@
             android:id="@+id/cast_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:textAlignment="center"
             android:ellipsize="end"
             android:lines="@integer/max_lines"

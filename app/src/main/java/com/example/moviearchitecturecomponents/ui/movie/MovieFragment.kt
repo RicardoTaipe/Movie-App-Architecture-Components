@@ -12,10 +12,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
+import com.example.moviearchitecturecomponents.network.response.Genre
+import com.example.moviearchitecturecomponents.network.response.MovieDetail
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.movie.cast.CastAdapter
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
+import com.google.android.material.chip.Chip
 import com.google.android.material.transition.MaterialContainerTransform
 
 class MovieFragment : Fragment() {
@@ -60,6 +63,7 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //postponeEnterTransition()
         setUpCastObserver()
+        movieViewModel.getMovieDetail(selectedMovie?.id!!)
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
 
         ImageUtil.setImageFromUrl(binding.detailMovieImage,
@@ -67,7 +71,7 @@ class MovieFragment : Fragment() {
         ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,
             "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.posterPath}")
 
-        binding.detailMovieTitle.text = selectedMovie?.title
+        binding.detailMovieTitle.text = selectedMovie?.originalTitle
         binding.detailMovieDesc.text = selectedMovie?.overview
         binding.cast.adapter = castAdapter
 
@@ -82,8 +86,34 @@ class MovieFragment : Fragment() {
 
     private fun setUpCastObserver() {
         movieViewModel.movie.observe(viewLifecycleOwner, {
-            castAdapter.dataSet = it.credits?.cast!!
+            bindData(it)
         })
     }
+
+    private fun bindData(movie: MovieDetail?) {
+        movie?.credits?.cast?.let {
+            castAdapter.dataSet = it
+        }
+
+        movie?.runtime?.let {
+            binding.detailMovieRuntime.text = getString(R.string.movie_runtime,
+                getHour(it),
+                getMinutes(it)
+            )
+        }
+        movie?.genres?.forEach { genre ->
+            binding.detailMovieGenres.addView(generateChip(genre))
+        }
+    }
+
+    private fun generateChip(genre: Genre): Chip {
+        return Chip(context).apply {
+            text = genre.name
+        }
+    }
+
+    private fun getHour(time: Int) = time / 60
+
+    private fun getMinutes(time: Int) = time % 60
 
 }

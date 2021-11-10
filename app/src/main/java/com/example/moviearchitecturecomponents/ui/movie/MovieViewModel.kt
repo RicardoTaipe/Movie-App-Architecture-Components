@@ -21,14 +21,10 @@ class MovieViewModel : ViewModel() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    init {
-        getMovieDetail()
-    }
-
-    private fun getMovieDetail() {
+    fun getMovieDetail(movieId:Int) {
         coroutineScope.launch {
             try {
-                val movie = MovieApi.retrofitService.getMovieById(580489,BuildConfig.TOKEN, "videos,credits")
+                val movie = MovieApi.retrofitService.getMovieById(movieId,BuildConfig.TOKEN, "videos,credits")
                 _movie.value = movie
 
             } catch (t: Throwable) {

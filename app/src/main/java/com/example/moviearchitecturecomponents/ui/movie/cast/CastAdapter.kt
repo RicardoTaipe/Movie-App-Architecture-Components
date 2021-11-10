@@ -12,7 +12,11 @@ class CastAdapter :
     RecyclerView.Adapter<CastAdapter.ViewHolder>() {
     var dataSet = listOf<Cast>()
         set(value) {
-            field = value
+            field = if (value.size > 10) {
+                value.take(10)
+            } else {
+                value
+            }
             notifyDataSetChanged()
         }
 
