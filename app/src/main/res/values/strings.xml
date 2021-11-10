@@ -6,5 +6,6 @@
     <string name="slide_image">slide_image</string>
     <string name="popular_movies">Popular</string>
     <string name="upcoming_movies">Upcoming</string>
+    <string name="cast">Cast</string>
     <string name="movie_image">movie_image</string>
 </resources>

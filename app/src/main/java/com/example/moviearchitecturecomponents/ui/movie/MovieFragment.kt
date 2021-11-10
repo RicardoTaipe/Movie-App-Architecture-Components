@@ -9,20 +9,23 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.example.moviearchitecturecomponents.MainActivity
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
 import com.example.moviearchitecturecomponents.network.response.Result
+import com.example.moviearchitecturecomponents.ui.movie.cast.CastAdapter
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
 import com.google.android.material.transition.MaterialContainerTransform
 
 class MovieFragment : Fragment() {
 
+    private val castAdapter = CastAdapter()
+
     private val movieViewModel: MovieViewModel by lazy {
         ViewModelProvider(this).get(MovieViewModel::class.java)
     }
+
     private lateinit var binding: FragmentMovieBinding
 
     private val selectedMovie: Result? by lazy(LazyThreadSafetyMode.NONE) { args.selectedMovie }
@@ -47,13 +50,16 @@ class MovieFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //postponeEnterTransition()
-
+        setUpCastObserver()
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
 
         ImageUtil.setImageFromUrl(binding.detailMovieImage,
@@ -63,22 +69,20 @@ class MovieFragment : Fragment() {
 
         binding.detailMovieTitle.text = selectedMovie?.title
         binding.detailMovieDesc.text = selectedMovie?.overview
+        binding.cast.adapter = castAdapter
 
         //startPostponedEnterTransition()
         AnimatorUtils.loadAnimation(context,
             binding.detailBackgroundMovie,
             R.animator.scale_animator)
         AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
-
-        getMovieFromApi()
-
         binding.executePendingBindings()
 
     }
 
-    private fun getMovieFromApi() {
+    private fun setUpCastObserver() {
         movieViewModel.movie.observe(viewLifecycleOwner, {
-
+            castAdapter.dataSet = it.credits?.cast!!
         })
     }
 

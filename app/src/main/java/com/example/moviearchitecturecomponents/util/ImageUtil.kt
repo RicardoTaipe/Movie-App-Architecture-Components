@@ -12,4 +12,12 @@ object ImageUtil {
             .placeholder(R.drawable.image_placeholder)
             .into(imageView)
     }
+
+    fun setCircleImageFromUrl(imageView: ImageView, url: String){
+        Glide.with(imageView.context)
+            .load(url)
+            .circleCrop()
+            .placeholder(R.drawable.image_placeholder)
+            .into(imageView)
+    }
 }
