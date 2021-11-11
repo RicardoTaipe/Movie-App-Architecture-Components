@@ -26,6 +26,7 @@ import android.animation.ObjectAnimator
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import android.animation.LayoutTransition
+import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 
@@ -70,6 +71,7 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener { findNavController().navigateUp() }
         setUpCastObserver()
         movieViewModel.getMovieDetail(selectedMovie?.id!!)
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
