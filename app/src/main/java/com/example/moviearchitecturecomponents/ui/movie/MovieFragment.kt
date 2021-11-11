@@ -136,6 +136,9 @@ class MovieFragment : Fragment() {
         movie?.genres?.forEach { genre ->
             binding.detailMovieGenres.addView(generateChip(genre))
         }
+        movie?.releaseDate?.let {
+            binding.detailMovieReleaseDate.text = it
+        }
     }
 
     private fun generateChip(genre: Genre): Chip {
