@@ -13,8 +13,10 @@
         android:background="@color/primary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/movie_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             tools:context=".ui.movie.MovieFragment">
 
             <ImageView
@@ -49,6 +51,19 @@
                 app:layout_constraintTop_toBottomOf="@id/detail_background_movie"
                 tools:srcCompat="@drawable/ic_launcher_background" />
 
+            <CheckBox
+                android:id="@+id/toggle_description"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:text="More"
+                android:textColor="@color/secondary"
+                app:layout_constraintEnd_toEndOf="@id/detail_movie_desc"
+                app:layout_constraintTop_toBottomOf="@id/detail_movie_desc" />
+
             <TextView
                 android:id="@+id/detail_movie_title"
                 android:layout_width="0dp"
@@ -58,11 +73,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                tools:text="movie title"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/detail_movie_image"
-                app:layout_constraintTop_toBottomOf="@id/detail_background_movie" />
+                app:layout_constraintTop_toBottomOf="@id/detail_background_movie"
+                tools:text="movie title" />
 
             <TextView
                 android:id="@+id/detail_movie_runtime"
@@ -73,36 +88,36 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                tools:text="2h30min"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/detail_movie_image"
-                app:layout_constraintTop_toBottomOf="@id/detail_movie_title" />
+                app:layout_constraintTop_toBottomOf="@id/detail_movie_title"
+                tools:text="2h30min" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/detail_movie_genres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/detail_movie_image"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/detail_movie_image" />
 
             <TextView
-                android:lineSpacingExtra="8dp"
                 android:id="@+id/detail_movie_desc"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                tools:text="@tools:sample/lorem"
+                android:lineSpacingExtra="8dp"
                 android:textColor="@color/design_default_color_on_primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detail_movie_genres" />
+                app:layout_constraintTop_toBottomOf="@id/detail_movie_genres"
+                tools:text="@tools:sample/lorem/random" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -122,12 +137,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@android:color/darker_gray"
                 android:text="@string/cast"
+                android:textColor="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detail_movie_desc"
-                />
+                app:layout_constraintTop_toBottomOf="@id/toggle_description" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast"
@@ -135,13 +149,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
+                android:clipToPadding="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cast_title"
                 tools:itemCount="3"
-                android:clipToPadding="false"
                 tools:listitem="@layout/cast_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
@@ -20,6 +21,14 @@ import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
 import com.google.android.material.chip.Chip
 import com.google.android.material.transition.MaterialContainerTransform
+import android.animation.ObjectAnimator
+
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import android.animation.LayoutTransition
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
+
 
 class MovieFragment : Fragment() {
 
@@ -61,27 +70,48 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //postponeEnterTransition()
         setUpCastObserver()
         movieViewModel.getMovieDetail(selectedMovie?.id!!)
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
+        binding.cast.adapter = castAdapter
 
+        loadImages()
+
+        toggleDescriptionSection()
+
+        binding.detailMovieTitle.text = selectedMovie?.originalTitle
+        binding.detailMovieDesc.text = selectedMovie?.overview
+
+        AnimatorUtils.loadAnimation(context, binding.detailMovieDesc, R.animator.scale_animator)
+        AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
+
+        binding.executePendingBindings()
+
+    }
+
+    private fun loadImages() {
         ImageUtil.setImageFromUrl(binding.detailMovieImage,
             "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.backdropPath}")
         ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,
             "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.posterPath}")
+    }
 
-        binding.detailMovieTitle.text = selectedMovie?.originalTitle
-        binding.detailMovieDesc.text = selectedMovie?.overview
-        binding.cast.adapter = castAdapter
-
-        //startPostponedEnterTransition()
-        AnimatorUtils.loadAnimation(context,
-            binding.detailBackgroundMovie,
-            R.animator.scale_animator)
-        AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
-        binding.executePendingBindings()
-
+    private fun toggleDescriptionSection() {
+        val initialHeight = binding.detailMovieDesc.layoutParams.height
+        binding.toggleDescription.setOnCheckedChangeListener { _, isChecked ->
+            TransitionManager.beginDelayedTransition(binding.movieContainer, AutoTransition())
+            val params = binding.detailMovieDesc.layoutParams
+            val text: String
+            if (isChecked) {
+                params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
+                text = "Less"
+            } else {
+                params.height = initialHeight
+                text = "More"
+            }
+            binding.toggleDescription.text = text
+            binding.detailMovieDesc.layoutParams = params
+        }
     }
 
     private fun setUpCastObserver() {
