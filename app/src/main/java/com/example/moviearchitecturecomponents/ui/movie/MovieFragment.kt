@@ -9,7 +9,6 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
@@ -21,14 +20,12 @@ import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
 import com.google.android.material.chip.Chip
 import com.google.android.material.transition.MaterialContainerTransform
-import android.animation.ObjectAnimator
 
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import android.animation.LayoutTransition
 import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
 
 
 class MovieFragment : Fragment() {
@@ -78,7 +75,11 @@ class MovieFragment : Fragment() {
         binding.cast.adapter = castAdapter
 
         loadImages()
-
+        binding.playMovie.setOnClickListener {
+            //findNavController().navigate(MovieFragmentDirections.actionNavigationMovieToNavigationVideoPlayer())
+            val newFragment = VideoPlayerFragment()
+            newFragment.show(childFragmentManager, "dialog")
+        }
         toggleDescriptionSection()
 
         binding.detailMovieTitle.text = selectedMovie?.originalTitle
