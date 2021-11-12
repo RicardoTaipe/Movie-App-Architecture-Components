@@ -75,10 +75,16 @@ class MovieFragment : Fragment() {
         binding.cast.adapter = castAdapter
 
         loadImages()
+
         binding.playMovie.setOnClickListener {
-            //findNavController().navigate(MovieFragmentDirections.actionNavigationMovieToNavigationVideoPlayer())
-            val newFragment = VideoPlayerFragment()
-            newFragment.show(childFragmentManager, "dialog")
+            val videos = movieViewModel.movie.value?.videos?.results?.filter { resultX ->
+                resultX.site.equals("YouTube") && resultX.official == true && resultX.type.equals("Trailer")
+            }
+            val video = videos?.get(0) ?: return@setOnClickListener
+            video.key.let {
+                VideoPlayerFragment.newInstance(it!!)
+                    .show(childFragmentManager, "dialog")
+            }
         }
         toggleDescriptionSection()
 
