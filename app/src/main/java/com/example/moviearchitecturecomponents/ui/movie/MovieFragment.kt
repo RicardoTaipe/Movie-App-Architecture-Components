@@ -30,6 +30,11 @@ import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragmen
 
 class MovieFragment : Fragment() {
 
+    companion object {
+        const val YOUTUBE = "YouTube"
+        const val TRAILER = "Trailer"
+    }
+
     private val castAdapter = CastAdapter()
 
     private val movieViewModel: MovieViewModel by lazy {
@@ -78,7 +83,8 @@ class MovieFragment : Fragment() {
 
         binding.playMovie.setOnClickListener {
             val videos = movieViewModel.movie.value?.videos?.results?.filter { resultX ->
-                resultX.site.equals("YouTube") && resultX.official == true && resultX.type.equals("Trailer")
+                resultX.site.equals(YOUTUBE) && resultX.official == true && resultX.type.equals(
+                    TRAILER)
             }
             val video = videos?.get(0) ?: return@setOnClickListener
             video.key.let {
@@ -113,10 +119,10 @@ class MovieFragment : Fragment() {
             val text: String
             if (isChecked) {
                 params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
-                text = "Less"
+                text = getString(R.string.Less)
             } else {
                 params.height = initialHeight
-                text = "More"
+                text = getString(R.string.More)
             }
             binding.toggleDescription.text = text
             binding.detailMovieDesc.layoutParams = params

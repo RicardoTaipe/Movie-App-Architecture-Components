@@ -58,6 +58,7 @@ class HomeViewModel : ViewModel() {
             }
             _page.value = _page.value?.plus(1)
         }
+
         override fun onFinish() {}
     }
 

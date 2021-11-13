@@ -9,4 +9,6 @@
     <string name="cast">Cast</string>
     <string name="movie_image">movie_image</string>
     <string name="movie_runtime">%1$dh %2$dmin</string>
+    <string name="Less">Less</string>
+    <string name="More">More</string>
 </resources>

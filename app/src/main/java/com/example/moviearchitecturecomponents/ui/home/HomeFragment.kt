@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentHomeBinding
 import com.example.moviearchitecturecomponents.network.response.Result
@@ -22,10 +21,10 @@ import com.example.moviearchitecturecomponents.util.ZoomOutPageTransformer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialElevationScale
 
+
 //TODO https://www.behance.net/gallery/83595081/Photo-Play-UI-Kit-For-FREE REDESIGN APP
 //https://freebiesui.com/figma-freebies/figma-app-designs/streaming-videos-app-ui-kit/
-class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener
-{
+class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
