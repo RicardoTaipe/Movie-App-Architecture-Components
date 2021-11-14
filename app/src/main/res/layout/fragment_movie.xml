@@ -197,7 +197,8 @@
                 app:srcCompat="?attr/homeAsUpIndicator" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
-                android:layout_width="0dp"
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/ic_baseline_favorite_24"
                 tools:checked="true"

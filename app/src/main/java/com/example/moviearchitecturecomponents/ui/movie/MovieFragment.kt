@@ -26,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
+import com.google.android.material.snackbar.Snackbar
 
 
 class MovieFragment : Fragment() {
@@ -91,6 +92,17 @@ class MovieFragment : Fragment() {
                 VideoPlayerFragment.newInstance(it!!)
                     .show(childFragmentManager, "dialog")
             }
+        }
+
+        binding.favorite.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) {
+                "favored"
+            } else {
+                "unfavored"
+            }
+            Snackbar.make(requireActivity().findViewById(R.id.container), message, Snackbar.LENGTH_SHORT)
+                .setAnchorView(requireActivity().findViewById(R.id.nav_view))
+                .show()
         }
         toggleDescriptionSection()
 
