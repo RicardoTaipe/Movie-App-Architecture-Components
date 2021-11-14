@@ -2,7 +2,7 @@
     <string name="app_name">MovieArchitectureComponents</string>
     <string name="title_home">Home</string>
     <string name="title_movie">Movie</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_favorites">Favorites</string>
     <string name="slide_image">slide_image</string>
     <string name="popular_movies">Popular</string>
     <string name="upcoming_movies">Upcoming</string>
@@ -11,4 +11,6 @@
     <string name="movie_runtime">%1$dh %2$dmin</string>
     <string name="Less">Less</string>
     <string name="More">More</string>
+    <string name="ADDED_TO_FAVORITES">ADDED TO FAVORITES</string>
+    <string name="REMOVED_FROM_FAVORITES">REMOVED FROM FAVORITES</string>
 </resources>

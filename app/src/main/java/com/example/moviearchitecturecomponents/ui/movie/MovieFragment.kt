@@ -96,9 +96,9 @@ class MovieFragment : Fragment() {
 
         binding.favorite.setOnCheckedChangeListener { _, isChecked ->
             val message = if (isChecked) {
-                "favored"
+                getString(R.string.ADDED_TO_FAVORITES)
             } else {
-                "unfavored"
+                getString(R.string.REMOVED_FROM_FAVORITES)
             }
             Snackbar.make(requireActivity().findViewById(R.id.container), message, Snackbar.LENGTH_SHORT)
                 .setAnchorView(requireActivity().findViewById(R.id.nav_view))
