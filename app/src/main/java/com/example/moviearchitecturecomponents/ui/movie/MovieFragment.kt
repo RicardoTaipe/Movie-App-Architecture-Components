@@ -22,6 +22,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.transition.MaterialContainerTransform
 
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -100,8 +101,11 @@ class MovieFragment : Fragment() {
             } else {
                 getString(R.string.REMOVED_FROM_FAVORITES)
             }
-            Snackbar.make(requireActivity().findViewById(R.id.container), message, Snackbar.LENGTH_SHORT)
+            Snackbar.make(requireActivity().findViewById(R.id.container),
+                message,
+                Snackbar.LENGTH_SHORT)
                 .setAnchorView(requireActivity().findViewById(R.id.nav_view))
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.secondary))
                 .show()
         }
         toggleDescriptionSection()
