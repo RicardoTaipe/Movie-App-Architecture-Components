@@ -30,7 +30,6 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ImageView
-                android:id="@+id/back_button"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/detail_background_movie"
@@ -188,7 +187,7 @@
                 tools:listitem="@layout/cast_item" />
 
             <ImageView
-                android:id="@+id/home_indicator"
+                android:id="@+id/back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -196,6 +195,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/white"
                 app:srcCompat="?attr/homeAsUpIndicator" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_baseline_favorite_24"
+                tools:checked="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
