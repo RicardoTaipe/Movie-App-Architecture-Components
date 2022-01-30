@@ -1,5 +1,7 @@
 package com.example.moviearchitecturecomponents.ui.movie
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -101,6 +103,7 @@ class MovieFragment : Fragment() {
             } else {
                 getString(R.string.REMOVED_FROM_FAVORITES)
             }
+            AnimatorUtils.loadAnimation(context, binding.favorite, R.animator.heart_animation)
             Snackbar.make(requireActivity().findViewById(R.id.container),
                 message,
                 Snackbar.LENGTH_SHORT)
