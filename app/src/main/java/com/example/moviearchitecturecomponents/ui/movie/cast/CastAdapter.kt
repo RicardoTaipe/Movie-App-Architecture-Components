@@ -35,7 +35,6 @@ class CastAdapter :
     class ViewHolder(private val binding: CastItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(cast: Cast) {
-            val context = itemView.context;
             binding.castName.text = cast.name
             binding.castCharacter.text = cast.character
             ImageUtil.setCircleImageFromUrl(binding.castImage,

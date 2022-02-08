@@ -76,25 +76,25 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
 
     private fun setupUpcomingMoviesObserver() {
 
-        homeViewModel.upcomingMovies.observe(viewLifecycleOwner, {
+        homeViewModel.upcomingMovies.observe(viewLifecycleOwner) {
             upcomingMoviesAdapter.dataSet = it.results!!
-        })
+        }
     }
 
     private fun setupPopularMoviesObserver() {
 
-        homeViewModel.movies.observe(viewLifecycleOwner, {
+        homeViewModel.movies.observe(viewLifecycleOwner) {
             slideAdapter.dataSet = it.results?.subList(0, HomeViewModel.SPLIT_INDEX)!!
             popularMoviesAdapter.dataSet =
                 it?.results.subList(HomeViewModel.SPLIT_INDEX, it?.results.size)
-        })
+        }
 
     }
 
     private fun setupSliderObserver() {
-        homeViewModel.page.observe(viewLifecycleOwner, {
+        homeViewModel.page.observe(viewLifecycleOwner) {
             binding.moviesSlider.setCurrentItem(it, true)
-        })
+        }
     }
 
     override fun onMovieClicked(movie: Result, imageView: ImageView) {

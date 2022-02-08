@@ -22,9 +22,9 @@ class FavoritesFragment : Fragment() {
             ViewModelProvider(this).get(FavoritesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_favorites, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        favoritesViewModel.text.observe(viewLifecycleOwner, {
+        favoritesViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        })
+        }
         return root
     }
 }

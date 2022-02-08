@@ -37,14 +37,13 @@ class MoviesAdapter(private val clickListener: MoviesAdapterListener) :
     class ViewHolder(private val binding: MoviePosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(result: Result, clickListener: MoviesAdapterListener) {
-            val context = itemView.context;
             ViewCompat.setTransitionName(binding.movieImage, result.id.toString())
             binding.root.setOnClickListener {
                 clickListener.onMovieClicked(result, binding.movieImage)
             }
             binding.movieTitle.text = result.title
             ImageUtil.setImageFromUrl(binding.movieImage,
-                "${NetworkConstants.IMAGE_URL_PATH}${result?.backdropPath}")
+                "${NetworkConstants.IMAGE_URL_PATH}${result.backdropPath}")
             binding.ratingValue.text = result.voteAverage?.toString()
             binding.ratingBar.rating = result.voteAverage?.toFloat()!!.div(2)
             binding.executePendingBindings()

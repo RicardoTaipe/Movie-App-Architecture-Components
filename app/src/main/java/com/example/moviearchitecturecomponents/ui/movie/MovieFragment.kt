@@ -1,16 +1,19 @@
 package com.example.moviearchitecturecomponents.ui.movie
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
@@ -18,18 +21,12 @@ import com.example.moviearchitecturecomponents.network.response.Genre
 import com.example.moviearchitecturecomponents.network.response.MovieDetail
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.movie.cast.CastAdapter
+import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.example.moviearchitecturecomponents.util.ImageUtil
 import com.google.android.material.chip.Chip
-import com.google.android.material.transition.MaterialContainerTransform
-
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
-import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
 
 
 class MovieFragment : Fragment() {
@@ -149,9 +146,9 @@ class MovieFragment : Fragment() {
     }
 
     private fun setUpCastObserver() {
-        movieViewModel.movie.observe(viewLifecycleOwner, {
+        movieViewModel.movie.observe(viewLifecycleOwner) {
             bindData(it)
-        })
+        }
     }
 
     private fun bindData(movie: MovieDetail?) {
