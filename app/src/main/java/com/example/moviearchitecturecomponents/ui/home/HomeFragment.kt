@@ -80,9 +80,9 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
     private fun setupPopularMoviesObserver() {
 
         homeViewModel.movies.observe(viewLifecycleOwner) {
-            slideAdapter.dataSet = it.results?.subList(0, HomeViewModel.SPLIT_INDEX)!!
+            slideAdapter.submitList(it.results?.subList(0, HomeViewModel.SPLIT_INDEX))
             popularMoviesAdapter.submitList(
-                it?.results.subList(HomeViewModel.SPLIT_INDEX, it?.results.size)
+                it?.results?.subList(HomeViewModel.SPLIT_INDEX, it.results.size)
             )
         }
 
@@ -116,6 +116,8 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
             )
     }
 
+
+    //TODO Fix transitions for all pages
     private fun applyTransitions() {
 
         exitTransition = MaterialElevationScale(false).apply {

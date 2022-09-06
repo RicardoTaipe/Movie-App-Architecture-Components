@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="slide"
+            type="com.example.moviearchitecturecomponents.network.response.Result" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +17,7 @@
 
         <ImageView
             android:id="@+id/slide_image"
+            app:imageUrl="@{slide.backdropPath}"
             android:layout_width="0dp"
             android:layout_height="@dimen/slide_height"
             android:contentDescription="@string/slide_image"
@@ -45,6 +50,7 @@
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:text="@{slide.title}"
             app:layout_constraintBottom_toBottomOf="@+id/slide_image"
             app:layout_constraintEnd_toEndOf="@+id/slide_gradient"
             app:layout_constraintHorizontal_bias="0.0"
