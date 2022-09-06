@@ -8,8 +8,7 @@
         android:valueTo="1.5"
         android:repeatCount="1"
         android:repeatMode="reverse"
-        android:pivotX="50%"
-        android:valueType="floatType"/>
+        android:valueType="floatType" />
     <objectAnimator
         android:duration="350"
         android:propertyName="scaleY"
@@ -17,6 +16,5 @@
         android:valueTo="1.5"
         android:repeatCount="1"
         android:repeatMode="reverse"
-        android:pivotY="50%"
-        android:valueType="floatType"/>
+        android:valueType="floatType" />
 </set>

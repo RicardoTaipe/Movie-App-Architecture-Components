@@ -39,7 +39,7 @@ class MovieFragment : Fragment() {
     private val castAdapter = CastAdapter()
 
     private val movieViewModel: MovieViewModel by lazy {
-        ViewModelProvider(this).get(MovieViewModel::class.java)
+        ViewModelProvider(this)[MovieViewModel::class.java]
     }
 
     private lateinit var binding: FragmentMovieBinding
@@ -64,7 +64,7 @@ class MovieFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -88,8 +88,8 @@ class MovieFragment : Fragment() {
                     TRAILER)
             }
             val video = videos?.get(0) ?: return@setOnClickListener
-            video.key.let {
-                VideoPlayerFragment.newInstance(it!!)
+            video.key?.let {
+                VideoPlayerFragment.newInstance(it)
                     .show(childFragmentManager, "dialog")
             }
         }
@@ -100,7 +100,9 @@ class MovieFragment : Fragment() {
             } else {
                 getString(R.string.REMOVED_FROM_FAVORITES)
             }
+
             AnimatorUtils.loadAnimation(context, binding.favorite, R.animator.heart_animation)
+
             Snackbar.make(requireActivity().findViewById(R.id.container),
                 message,
                 Snackbar.LENGTH_SHORT)
@@ -113,11 +115,7 @@ class MovieFragment : Fragment() {
         binding.detailMovieTitle.text = selectedMovie?.originalTitle
         binding.detailMovieDesc.text = selectedMovie?.overview
 
-        AnimatorUtils.loadAnimation(context, binding.detailMovieDesc, R.animator.scale_animator)
-        AnimatorUtils.loadAnimation(context, binding.playMovie, R.animator.scale_animator)
-
         binding.executePendingBindings()
-
     }
 
     private fun loadImages() {
@@ -154,6 +152,9 @@ class MovieFragment : Fragment() {
     private fun bindData(movie: MovieDetail?) {
         movie?.credits?.cast?.let {
             castAdapter.dataSet = it
+            if (it.size > 3) {
+                AnimatorUtils.loadAnimation(context, binding.cast, R.animator.peekaboo)
+            }
         }
 
         movie?.runtime?.let {
@@ -162,6 +163,7 @@ class MovieFragment : Fragment() {
                 getMinutes(it)
             )
         }
+        binding.detailMovieGenres.removeAllViews()
         movie?.genres?.forEach { genre ->
             binding.detailMovieGenres.addView(generateChip(genre))
         }
@@ -171,9 +173,11 @@ class MovieFragment : Fragment() {
     }
 
     private fun generateChip(genre: Genre): Chip {
-        return Chip(context).apply {
-            text = genre.name
-        }
+        val inflater = LayoutInflater.from(binding.detailMovieGenres.context)
+        val chip: Chip =
+            inflater.inflate(R.layout.category_chip, binding.detailMovieGenres, false) as Chip
+        chip.text = genre.name
+        return chip
     }
 
     private fun getHour(time: Int) = time / 60
@@ -181,3 +185,10 @@ class MovieFragment : Fragment() {
     private fun getMinutes(time: Int) = time % 60
 
 }
+/*
+val inflater = LayoutInflater.from(binding.detailMovieGenres.context)
+val chip: Chip =  inflater.inflate(R.layout.category_chip, binding.detailMovieGenres, false) as Chip
+chip.text = genre.name
+
+}
+binding.detailMovieGenres.removeAllViews()*/

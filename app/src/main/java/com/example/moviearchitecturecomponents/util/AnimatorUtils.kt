@@ -17,5 +17,4 @@ object AnimatorUtils {
 
 //// Using View Animation (legacy code)
 //        val scaleAnimation = AnimationUtils.loadAnimation(context, R.anim.scale_animation)
-//        binding.detailBackgroundMovie.animation = scaleAnimation
-//        binding.playMovie.animation = scaleAnimation
+//        binding.playMovie.startAnimation(scaleAnimation)

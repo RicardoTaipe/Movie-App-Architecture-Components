@@ -1,6 +1,5 @@
 package com.example.moviearchitecturecomponents.util
 
-import android.app.Application
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.moviearchitecturecomponents.R
@@ -17,7 +16,7 @@ object ImageUtil {
         Glide.with(imageView.context)
             .load(url)
             .circleCrop()
-            .placeholder(R.drawable.image_placeholder)
+            .placeholder(R.drawable.rounded_image_placeholder)
             .into(imageView)
     }
 }
