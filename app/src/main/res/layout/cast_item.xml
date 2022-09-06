@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="cast"
+            type="com.example.moviearchitecturecomponents.network.response.Cast" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:roundedImageUrl="@{cast.profilePath}"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -28,26 +33,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textAlignment="center"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:text="@{cast.name}"
+            android:textAlignment="center"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cast_image"
-            tools:text="Cast name"
-            android:gravity="center_horizontal" />
+            tools:text="Cast name" />
 
         <TextView
             android:id="@+id/cast_character"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:text="@{cast.character}"
             android:textAlignment="center"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cast_name"
-            tools:text="Character"
-            android:gravity="center_horizontal" />
+            tools:text="Character" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

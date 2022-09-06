@@ -2,6 +2,8 @@ package com.example.moviearchitecturecomponents.ui.movie.cast
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviearchitecturecomponents.databinding.CastItemBinding
 import com.example.moviearchitecturecomponents.network.NetworkConstants
@@ -9,16 +11,7 @@ import com.example.moviearchitecturecomponents.network.response.Cast
 import com.example.moviearchitecturecomponents.util.ImageUtil
 
 class CastAdapter :
-    RecyclerView.Adapter<CastAdapter.ViewHolder>() {
-    var dataSet = listOf<Cast>()
-        set(value) {
-            field = if (value.size > 10) {
-                value.take(10)
-            } else {
-                value
-            }
-            notifyDataSetChanged()
-        }
+    ListAdapter<Cast, CastAdapter.ViewHolder>(CastDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -27,20 +20,25 @@ class CastAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataSet[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount() = dataSet.size
 
     class ViewHolder(private val binding: CastItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(cast: Cast) {
-            binding.castName.text = cast.name
-            binding.castCharacter.text = cast.character
-            ImageUtil.setCircleImageFromUrl(binding.castImage,
-                "${NetworkConstants.IMAGE_URL_PATH}${cast.profilePath}")
+            binding.cast = cast
             binding.executePendingBindings()
         }
 
+    }
+}
+
+object CastDiffCallback : DiffUtil.ItemCallback<Cast>() {
+    override fun areItemsTheSame(oldItem: Cast, newItem: Cast): Boolean {
+        return oldItem.castId == newItem.castId
+    }
+
+    override fun areContentsTheSame(oldItem: Cast, newItem: Cast): Boolean {
+        return oldItem == newItem
     }
 }

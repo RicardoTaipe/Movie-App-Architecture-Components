@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -75,10 +74,9 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieViewModel.getMovieDetail(selectedMovie?.id!!)
-        setUpCastObserver()
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
         binding.cast.adapter = castAdapter
-
+        setUpCastObserver()
         setNavigationUpListener()
         setFavoriteIconListener()
         toggleDescriptionSection()
@@ -145,7 +143,7 @@ class MovieFragment : Fragment() {
 
     private fun bindData(movie: MovieDetail?) {
         movie?.credits?.cast?.let {
-            castAdapter.dataSet = it
+            castAdapter.submitList(it)
             if (it.size > 3) {
                 AnimatorUtils.loadAnimation(context, binding.cast, R.animator.peekaboo)
             }
