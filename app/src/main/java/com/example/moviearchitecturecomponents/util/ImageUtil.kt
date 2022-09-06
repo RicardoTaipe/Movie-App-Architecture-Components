@@ -19,7 +19,7 @@ object ImageUtil {
             .load("${NetworkConstants.IMAGE_URL_PATH}${url}")
             .circleCrop()
             .placeholder(R.drawable.rounded_image_placeholder)
-            .error(R.drawable.image_placeholder)
+            .error(R.drawable.rounded_image_placeholder)
             .into(imageView)
     }
 }
