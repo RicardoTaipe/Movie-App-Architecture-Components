@@ -27,7 +27,7 @@ import com.google.android.material.transition.MaterialElevationScale
 class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
 
     private val homeViewModel: HomeViewModel by lazy {
-        ViewModelProvider(this).get(HomeViewModel::class.java)
+        ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     private lateinit var binding: FragmentHomeBinding
@@ -37,10 +37,6 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
     private val popularMoviesAdapter = MoviesAdapter(this)
 
     private val upcomingMoviesAdapter = MoviesAdapter(this)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

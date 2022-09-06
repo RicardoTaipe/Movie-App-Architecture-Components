@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -16,14 +17,12 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
-import com.example.moviearchitecturecomponents.network.NetworkConstants
 import com.example.moviearchitecturecomponents.network.response.Genre
 import com.example.moviearchitecturecomponents.network.response.MovieDetail
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.movie.cast.CastAdapter
 import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
-import com.example.moviearchitecturecomponents.util.ImageUtil
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
@@ -68,61 +67,57 @@ class MovieFragment : Fragment() {
         binding = FragmentMovieBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            viewmodel = movieViewModel
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backButton.setOnClickListener { findNavController().navigateUp() }
-        setUpCastObserver()
         movieViewModel.getMovieDetail(selectedMovie?.id!!)
+        setUpCastObserver()
         ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
         binding.cast.adapter = castAdapter
 
-        loadImages()
+        setNavigationUpListener()
+        setFavoriteIconListener()
+        toggleDescriptionSection()
+        openTrailer()
+    }
 
+    private fun openTrailer() {
         binding.playMovie.setOnClickListener {
             val videos = movieViewModel.movie.value?.videos?.results?.filter { resultX ->
                 resultX.site.equals(YOUTUBE) && resultX.official == true && resultX.type.equals(
                     TRAILER)
-            }
-            val video = videos?.get(0) ?: return@setOnClickListener
+            } ?: return@setOnClickListener
+            val video = videos[0]
             video.key?.let {
                 VideoPlayerFragment.newInstance(it)
-                    .show(childFragmentManager, "dialog")
+                    .show(parentFragmentManager, "dialog")
             }
         }
+    }
 
+    private fun setFavoriteIconListener() {
         binding.favorite.setOnCheckedChangeListener { _, isChecked ->
-            val message = if (isChecked) {
-                getString(R.string.ADDED_TO_FAVORITES)
-            } else {
-                getString(R.string.REMOVED_FROM_FAVORITES)
-            }
-
             AnimatorUtils.loadAnimation(context, binding.favorite, R.animator.heart_animation)
-
+            val message = if (isChecked) {
+                R.string.ADDED_TO_FAVORITES
+            } else {
+                R.string.REMOVED_FROM_FAVORITES
+            }
             Snackbar.make(requireActivity().findViewById(R.id.container),
-                message,
+                getString(message),
                 Snackbar.LENGTH_SHORT)
                 .setAnchorView(requireActivity().findViewById(R.id.nav_view))
                 .setTextColor(ContextCompat.getColor(requireContext(), R.color.secondary))
                 .show()
         }
-        toggleDescriptionSection()
-
-        binding.detailMovieTitle.text = selectedMovie?.originalTitle
-        binding.detailMovieDesc.text = selectedMovie?.overview
-
-        binding.executePendingBindings()
     }
 
-    private fun loadImages() {
-        ImageUtil.setImageFromUrl(binding.detailMovieImage,
-            "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.backdropPath}")
-        ImageUtil.setImageFromUrl(binding.detailBackgroundMovie,
-            "${NetworkConstants.IMAGE_URL_PATH}${selectedMovie?.posterPath}")
+    private fun setNavigationUpListener() {
+        binding.backButton.setOnClickListener { findNavController().navigateUp() }
     }
 
     private fun toggleDescriptionSection() {
@@ -130,15 +125,14 @@ class MovieFragment : Fragment() {
         binding.toggleDescription.setOnCheckedChangeListener { _, isChecked ->
             TransitionManager.beginDelayedTransition(binding.movieContainer, AutoTransition())
             val params = binding.detailMovieDesc.layoutParams
-            val text: String
-            if (isChecked) {
+            val text = if (isChecked) {
                 params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
-                text = getString(R.string.Less)
+                R.string.Less
             } else {
                 params.height = initialHeight
-                text = getString(R.string.More)
+                R.string.More
             }
-            binding.toggleDescription.text = text
+            binding.toggleDescription.text = getString(text)
             binding.detailMovieDesc.layoutParams = params
         }
     }
@@ -157,18 +151,9 @@ class MovieFragment : Fragment() {
             }
         }
 
-        movie?.runtime?.let {
-            binding.detailMovieRuntime.text = getString(R.string.movie_runtime,
-                getHour(it),
-                getMinutes(it)
-            )
-        }
         binding.detailMovieGenres.removeAllViews()
         movie?.genres?.forEach { genre ->
             binding.detailMovieGenres.addView(generateChip(genre))
-        }
-        movie?.releaseDate?.let {
-            binding.detailMovieReleaseDate.text = it
         }
     }
 
@@ -179,16 +164,4 @@ class MovieFragment : Fragment() {
         chip.text = genre.name
         return chip
     }
-
-    private fun getHour(time: Int) = time / 60
-
-    private fun getMinutes(time: Int) = time % 60
-
 }
-/*
-val inflater = LayoutInflater.from(binding.detailMovieGenres.context)
-val chip: Chip =  inflater.inflate(R.layout.category_chip, binding.detailMovieGenres, false) as Chip
-chip.text = genre.name
-
-}
-binding.detailMovieGenres.removeAllViews()*/

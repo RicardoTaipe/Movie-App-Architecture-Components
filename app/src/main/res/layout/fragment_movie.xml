@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="com.example.moviearchitecturecomponents.ui.movie.MovieViewModel" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -23,11 +27,12 @@
                 android:id="@+id/detail_background_movie"
                 android:layout_width="0dp"
                 android:layout_height="245dp"
-                android:scaleType="centerCrop"
                 android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:imageUrl="@{viewmodel.movie.posterPath}"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ImageView
@@ -46,6 +51,7 @@
                 android:layout_height="175dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                app:imageUrl="@{viewmodel.movie.backdropPath}"
                 android:contentDescription="@string/movie_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@id/detail_background_movie"
@@ -74,6 +80,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:text="@{viewmodel.movie.originalTitle}"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/detail_movie_image"
@@ -90,6 +97,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:textColor="@color/white"
+                android:text="@{viewmodel.movie.releaseDate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/detail_movie_image"
                 app:layout_constraintTop_toBottomOf="@id/detail_movie_title"
@@ -97,15 +105,15 @@
 
             <ImageView
                 android:id="@+id/clock_icon"
-                app:layout_constraintTop_toBottomOf="@id/detail_movie_release_date"
-                app:layout_constraintStart_toEndOf="@id/detail_movie_image"
-                app:layout_constraintEnd_toStartOf="@id/detail_movie_runtime"
-                android:layout_marginLeft="16dp"
-                app:tint="@color/secondary"
-                android:layout_marginTop="16dp"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                app:srcCompat="@android:drawable/ic_menu_recent_history" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@id/detail_movie_runtime"
+                app:layout_constraintStart_toEndOf="@id/detail_movie_image"
+                app:layout_constraintTop_toBottomOf="@id/detail_movie_release_date"
+                app:srcCompat="@android:drawable/ic_menu_recent_history"
+                app:tint="@color/secondary" />
 
             <TextView
                 android:id="@+id/detail_movie_runtime"
@@ -116,25 +124,26 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:textColor="@color/white"
+                android:text="@{viewmodel.formattedRuntime}"
+                app:layout_constraintBottom_toBottomOf="@id/clock_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/clock_icon"
                 app:layout_constraintTop_toTopOf="@id/clock_icon"
-                app:layout_constraintBottom_toBottomOf="@id/clock_icon"
                 tools:text="2h30min" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/detail_movie_genres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:background="@color/cardview_light_background"
-                tools:layout_width="100dp"
-                tools:layout_height="20dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detail_movie_runtime" />
+                app:layout_constraintTop_toBottomOf="@id/detail_movie_runtime"
+                tools:background="@color/cardview_light_background"
+                tools:layout_height="20dp"
+                tools:layout_width="100dp" />
 
             <TextView
                 android:id="@+id/detail_movie_desc"
@@ -149,6 +158,7 @@
                 android:textColor="@color/design_default_color_on_primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{viewmodel.movie.overview}"
                 app:layout_constraintTop_toBottomOf="@id/detail_movie_genres"
                 tools:text="@tools:sample/lorem/random" />
 
@@ -198,8 +208,8 @@
                 android:layout_margin="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white"
-                app:srcCompat="?attr/homeAsUpIndicator" />
+                app:srcCompat="?attr/homeAsUpIndicator"
+                app:tint="@color/white" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/favorite"
