@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="movie"
+            type="com.example.moviearchitecturecomponents.network.response.Result" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{movie.backdropPath}"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -35,6 +39,7 @@
             android:layout_marginRight="8dp"
             android:ellipsize="end"
             android:lines="@integer/max_lines"
+            android:text="@{movie.title}"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +66,7 @@
             android:id="@+id/rating_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{String.valueOf(movie.voteAverage)}"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/rating_bar"
             app:layout_constraintHorizontal_bias="0.5"
