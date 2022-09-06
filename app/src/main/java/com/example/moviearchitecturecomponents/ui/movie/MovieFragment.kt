@@ -136,13 +136,15 @@ class MovieFragment : Fragment() {
     }
 
     private fun setUpCastObserver() {
-        movieViewModel.movie.observe(viewLifecycleOwner) {
-            bindData(it)
+        movieViewModel.movie.observe(viewLifecycleOwner) { movie ->
+            movie?.let {
+                bindData(it)
+            }
         }
     }
 
-    private fun bindData(movie: MovieDetail?) {
-        movie?.credits?.cast?.let {
+    private fun bindData(movie: MovieDetail) {
+        movie.credits?.cast?.let {
             castAdapter.submitList(if (it.size > 10) it.take(10) else it)
             if (it.size > 3) {
                 AnimatorUtils.loadAnimation(context, binding.cast, R.animator.peekaboo)
@@ -150,7 +152,7 @@ class MovieFragment : Fragment() {
         }
 
         binding.detailMovieGenres.removeAllViews()
-        movie?.genres?.forEach { genre ->
+        movie.genres?.forEach { genre ->
             binding.detailMovieGenres.addView(generateChip(genre))
         }
     }
