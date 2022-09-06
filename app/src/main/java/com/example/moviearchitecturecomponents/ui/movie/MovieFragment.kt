@@ -143,7 +143,7 @@ class MovieFragment : Fragment() {
 
     private fun bindData(movie: MovieDetail?) {
         movie?.credits?.cast?.let {
-            castAdapter.submitList(it)
+            castAdapter.submitList(if (it.size > 10) it.take(10) else it)
             if (it.size > 3) {
                 AnimatorUtils.loadAnimation(context, binding.cast, R.animator.peekaboo)
             }
