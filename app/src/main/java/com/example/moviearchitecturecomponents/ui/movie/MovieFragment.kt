@@ -19,6 +19,7 @@ import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.response.Genre
 import com.example.moviearchitecturecomponents.network.response.MovieDetail
 import com.example.moviearchitecturecomponents.network.response.Result
+import com.example.moviearchitecturecomponents.ui.movie.MovieFragment.Companion.YOUTUBE
 import com.example.moviearchitecturecomponents.ui.movie.cast.CastAdapter
 import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
@@ -81,6 +82,18 @@ class MovieFragment : Fragment() {
         setFavoriteIconListener()
         toggleDescriptionSection()
         openTrailer()
+        setUpLoadingObserver()
+    }
+
+    private fun setUpLoadingObserver() {
+        movieViewModel.status.observe(viewLifecycleOwner) {
+            it ?: return@observe
+            when (it) {
+                ApiStatus.LOADING -> binding.movieContainer.alpha = 0f
+                ApiStatus.DONE -> binding.movieContainer.alpha = 1f
+                ApiStatus.ERROR -> binding.movieContainer.alpha = 0f
+            }
+        }
     }
 
     private fun openTrailer() {
