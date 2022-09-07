@@ -90,7 +90,7 @@ class MovieFragment : Fragment() {
             it ?: return@observe
             when (it) {
                 ApiStatus.LOADING -> binding.movieContainer.alpha = 0f
-                ApiStatus.DONE -> binding.movieContainer.alpha = 1f
+                ApiStatus.DONE -> binding.movieContainer.animate().alpha(1f).start()
                 ApiStatus.ERROR -> binding.movieContainer.alpha = 0f
             }
         }

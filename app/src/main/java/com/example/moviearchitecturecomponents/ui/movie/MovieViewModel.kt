@@ -1,5 +1,6 @@
 package com.example.moviearchitecturecomponents.ui.movie
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -14,6 +15,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 enum class ApiStatus { LOADING, ERROR, DONE }
+
+private val TAG = MovieViewModel::class.simpleName
 
 class MovieViewModel : ViewModel() {
 
@@ -40,6 +43,7 @@ class MovieViewModel : ViewModel() {
                 _status.value = ApiStatus.DONE
             } catch (t: Throwable) {
                 _status.value = ApiStatus.ERROR
+                Log.d(TAG, t.toString())
                 //https://api.themoviedb.org/3/movie/580489?api_key=6{API_KEY}&append_to_response=videos,credits
             }
         }

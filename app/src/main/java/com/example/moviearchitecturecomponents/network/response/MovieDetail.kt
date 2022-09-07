@@ -38,6 +38,7 @@ data class MovieDetail(
     val productionCountries: List<ProductionCountry>? = null,
     @Json(name = "release_date")
     val releaseDate: String? = null,
+    @Transient
     @Json(name = "revenue")
     val revenue: Int? = null,
     @Json(name = "runtime")
