@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -19,11 +20,11 @@ import com.example.moviearchitecturecomponents.databinding.FragmentMovieBinding
 import com.example.moviearchitecturecomponents.network.response.Genre
 import com.example.moviearchitecturecomponents.network.response.MovieDetail
 import com.example.moviearchitecturecomponents.network.response.Result
-import com.example.moviearchitecturecomponents.ui.movie.MovieFragment.Companion.YOUTUBE
 import com.example.moviearchitecturecomponents.ui.movie.cast.CastAdapter
 import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragment
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.google.android.material.chip.Chip
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 
@@ -55,6 +56,7 @@ class MovieFragment : Fragment() {
             drawingViewId = R.id.nav_host_fragment
             duration = resources.getInteger(R.integer.material_motion_duration_long_1).toLong()
             scrimColor = Color.TRANSPARENT
+            setAllContainerColors(MaterialColors.getColor(requireContext(), R.attr.colorSurface, 0))
         }
 
     }
@@ -82,7 +84,7 @@ class MovieFragment : Fragment() {
         setFavoriteIconListener()
         toggleDescriptionSection()
         openTrailer()
-        setUpLoadingObserver()
+        //setUpLoadingObserver()
     }
 
     private fun setUpLoadingObserver() {
@@ -102,6 +104,10 @@ class MovieFragment : Fragment() {
                 resultX.site.equals(YOUTUBE) && resultX.official == true && resultX.type.equals(
                     TRAILER)
             } ?: return@setOnClickListener
+            if (videos.isEmpty()) {
+                Toast.makeText(context, "No video available", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val video = videos[0]
             video.key?.let {
                 VideoPlayerFragment.newInstance(it)

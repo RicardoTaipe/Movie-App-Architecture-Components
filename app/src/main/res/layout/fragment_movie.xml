@@ -61,12 +61,14 @@
 
             <CheckBox
                 android:id="@+id/toggle_description"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
                 android:layout_margin="8dp"
                 android:background="@null"
+                app:layout_constraintStart_toStartOf="parent"
                 android:button="@android:color/transparent"
                 android:checked="false"
+                android:textAlignment="textEnd"
                 android:text="More"
                 android:textColor="@color/secondary"
                 app:layout_constraintEnd_toEndOf="@id/detail_movie_desc"
@@ -213,8 +215,8 @@
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/favorite"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:button="@drawable/ic_baseline_favorite_24"
