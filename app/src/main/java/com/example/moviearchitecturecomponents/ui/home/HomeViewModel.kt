@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.moviearchitecturecomponents.BuildConfig
 import com.example.moviearchitecturecomponents.network.MovieApi
 import com.example.moviearchitecturecomponents.network.response.Movies
+import com.example.moviearchitecturecomponents.ui.movie.ApiStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,8 +29,8 @@ class HomeViewModel : ViewModel() {
     val page: LiveData<Int>
         get() = _page
 
-    private val _status = MutableLiveData<String>()
-    val status: LiveData<String>
+    private val _status = MutableLiveData<ApiStatus>()
+    val status: LiveData<ApiStatus>
         get() = _status
 
     private val _movies = MutableLiveData<Movies>()
@@ -65,12 +66,14 @@ class HomeViewModel : ViewModel() {
     private fun getPopularMovies() {
         coroutineScope.launch {
             try {
+                _status.value = ApiStatus.LOADING
                 val movies = MovieApi.retrofitService.getMovies(POPULAR, BuildConfig.TOKEN, 1)
                 _movies.value = movies
+                _status.value = ApiStatus.DONE
                 Log.d("TAG", movies.toString())
             } catch (t: Throwable) {
-                _status.value = "error" + t.message
-                Log.d("TAG", t.toString())
+                _status.value = ApiStatus.ERROR
+                Log.e("TAG", t.toString())
             }
         }
     }
@@ -78,11 +81,14 @@ class HomeViewModel : ViewModel() {
     private fun getUpcomingMovies() {
         coroutineScope.launch {
             try {
+                _status.value = ApiStatus.LOADING
                 val movies = MovieApi.retrofitService.getMovies(UPCOMING, BuildConfig.TOKEN, 1)
                 _upcomingMovies.value = movies
+                _status.value = ApiStatus.DONE
                 Log.d("TAG", movies.toString())
             } catch (t: Throwable) {
-                _status.value = "error" + t.message
+                _status.value = ApiStatus.ERROR
+                Log.e("TAG", t.toString())
             }
         }
     }

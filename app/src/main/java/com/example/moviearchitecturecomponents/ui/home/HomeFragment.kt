@@ -17,6 +17,7 @@ import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.home.MoviesAdapter.MoviesAdapterListener
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter
 import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter.SliderAdapterListener
+import com.example.moviearchitecturecomponents.ui.movie.ApiStatus
 import com.example.moviearchitecturecomponents.util.ZoomOutPageTransformer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialElevationScale
@@ -48,7 +49,8 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
             homeViewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        ViewGroupCompat.setTransitionGroup(binding.root as ViewGroup, true)
+        ViewGroupCompat.setTransitionGroup(binding.popularMovies as ViewGroup, true)
+        ViewGroupCompat.setTransitionGroup(binding.upcomingMovies as ViewGroup, true)
         return binding.root
     }
 
@@ -68,6 +70,27 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
         setupPopularMoviesObserver()
         setupUpcomingMoviesObserver()
         setupSliderObserver()
+        setUpLoadingObserver()
+    }
+
+    private fun setUpLoadingObserver() {
+        homeViewModel.status.observe(viewLifecycleOwner) {
+            it ?: return@observe
+            when (it) {
+                ApiStatus.LOADING -> binding.apply {
+                    loadingIndicator.visibility = View.VISIBLE
+                    homeContainer.visibility = View.GONE
+                }
+                ApiStatus.DONE -> binding.apply {
+                    loadingIndicator.visibility = View.GONE
+                    homeContainer.visibility = View.VISIBLE
+                }
+                ApiStatus.ERROR -> binding.apply {
+                    loadingIndicator.visibility = View.VISIBLE
+                    homeContainer.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun setupUpcomingMoviesObserver() {
