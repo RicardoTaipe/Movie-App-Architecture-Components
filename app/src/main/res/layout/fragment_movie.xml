@@ -32,10 +32,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:imageUrl="@{viewmodel.movie.posterPath}"
+                app:imageUrl="@{viewmodel.movie.backdropPath}"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ImageView
+                android:id="@+id/background_gradient"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:importantForAccessibility="no"
@@ -51,7 +52,7 @@
                 android:layout_height="175dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                app:imageUrl="@{viewmodel.movie.backdropPath}"
+                app:imageUrl="@{viewmodel.movie.posterPath}"
                 android:contentDescription="@string/movie_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@id/detail_background_movie"
@@ -135,17 +136,18 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/detail_movie_genres"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detail_movie_runtime"
                 tools:background="@color/cardview_light_background"
                 tools:layout_height="20dp"
-                tools:layout_width="100dp" />
+                tools:layout_width="0dp" />
 
             <TextView
                 android:id="@+id/detail_movie_desc"
