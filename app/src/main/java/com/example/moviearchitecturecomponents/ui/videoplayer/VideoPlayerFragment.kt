@@ -47,7 +47,9 @@ class VideoPlayerFragment : DialogFragment() {
                 }
             })
             builder.setView(binding.root)
-            builder.create()
+            builder.create().apply {
+                setCanceledOnTouchOutside(false)
+            }
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
