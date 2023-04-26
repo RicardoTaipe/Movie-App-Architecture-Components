@@ -101,18 +101,11 @@ class MovieFragment : Fragment() {
 
     private fun openTrailer() {
         binding.playMovie.setOnClickListener {
-            val videos = movieViewModel.movie.value?.videos?.results?.filter { resultX ->
-                resultX.site.equals(YOUTUBE) && resultX.official == true && resultX.type.equals(
-                    TRAILER
-                )
-            } ?: return@setOnClickListener
-            if (videos.isEmpty()) {
+            val id = movieViewModel.getIdForTrailer()
+            if (id.isBlank()) {
                 Toast.makeText(context, "No video available", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val video = videos[0]
-            video.key?.let {
-                VideoPlayerFragment.newInstance(it)
+            } else {
+                VideoPlayerFragment.newInstance(id)
                     .show(parentFragmentManager, "dialog")
             }
         }

@@ -36,9 +36,11 @@ class MovieViewModel : ViewModel() {
         coroutineScope.launch {
             try {
                 _status.value = ApiStatus.LOADING
-                val movie = MovieApi.retrofitService.getMovieById(movieId,
+                val movie = MovieApi.retrofitService.getMovieById(
+                    movieId,
                     BuildConfig.TOKEN,
-                    "videos,credits")
+                    "videos,credits"
+                )
                 _movie.value = movie
                 _status.value = ApiStatus.DONE
             } catch (t: Throwable) {
@@ -47,6 +49,14 @@ class MovieViewModel : ViewModel() {
                 //https://api.themoviedb.org/3/movie/580489?api_key=6{API_KEY}&append_to_response=videos,credits
             }
         }
+    }
+
+    fun getIdForTrailer(): String {
+        return _movie.value?.videos?.results?.firstOrNull { resultX ->
+            resultX.site.equals(MovieFragment.YOUTUBE) && resultX.official == true && resultX.type.equals(
+                MovieFragment.TRAILER
+            )
+        }?.key.orEmpty()
     }
 
     override fun onCleared() {
