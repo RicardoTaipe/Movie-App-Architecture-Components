@@ -19,8 +19,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/movie_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
+            android:paddingBottom="16dp"
             tools:context=".ui.movie.MovieFragment">
 
             <ImageView
@@ -63,8 +64,8 @@
             <CheckBox
                 android:id="@+id/toggle_description"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:background="@null"
                 app:layout_constraintStart_toStartOf="parent"
                 android:button="@android:color/transparent"
@@ -72,7 +73,7 @@
                 android:textAlignment="textEnd"
                 android:text="More"
                 android:textColor="@color/secondary"
-                app:layout_constraintEnd_toEndOf="@id/detail_movie_desc"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detail_movie_desc" />
 
             <TextView
@@ -153,11 +154,7 @@
                 android:id="@+id/detail_movie_desc"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_margin="16dp"
                 android:lineSpacingExtra="8dp"
                 android:textColor="@color/design_default_color_on_primary"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -181,9 +178,8 @@
                 android:id="@+id/cast_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/cast"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -195,7 +191,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

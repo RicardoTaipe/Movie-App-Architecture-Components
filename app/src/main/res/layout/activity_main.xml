@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            android:background="@color/primary"
             app:navGraph="@navigation/mobile_navigation" />
 
 
@@ -24,7 +23,9 @@
             android:layout_gravity="bottom"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:background="?android:attr/windowBackground"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            android:background="@drawable/gradient_bg"
             android:visibility="visible"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             app:menu="@menu/bottom_nav_menu" />

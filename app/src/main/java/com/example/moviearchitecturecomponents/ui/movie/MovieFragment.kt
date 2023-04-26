@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -25,6 +25,7 @@ import com.example.moviearchitecturecomponents.ui.videoplayer.VideoPlayerFragmen
 import com.example.moviearchitecturecomponents.util.AnimatorUtils
 import com.google.android.material.chip.Chip
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 
@@ -77,7 +78,7 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieViewModel.getMovieDetail(selectedMovie?.id!!)
-        ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
+        //ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
         binding.cast.adapter = castAdapter
         setUpCastObserver()
         setNavigationUpListener()
@@ -102,7 +103,8 @@ class MovieFragment : Fragment() {
         binding.playMovie.setOnClickListener {
             val videos = movieViewModel.movie.value?.videos?.results?.filter { resultX ->
                 resultX.site.equals(YOUTUBE) && resultX.official == true && resultX.type.equals(
-                    TRAILER)
+                    TRAILER
+                )
             } ?: return@setOnClickListener
             if (videos.isEmpty()) {
                 Toast.makeText(context, "No video available", Toast.LENGTH_SHORT).show()
@@ -124,13 +126,19 @@ class MovieFragment : Fragment() {
             } else {
                 R.string.REMOVED_FROM_FAVORITES
             }
-            Snackbar.make(requireActivity().findViewById(R.id.container),
-                getString(message),
-                Snackbar.LENGTH_SHORT)
-                .setAnchorView(requireActivity().findViewById(R.id.nav_view))
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.secondary))
-                .show()
+            showSnackbar(message)
         }
+    }
+
+    private fun showSnackbar(@StringRes message: Int) {
+        Snackbar.make(
+            requireActivity().findViewById(R.id.container),
+            getString(message),
+            Snackbar.LENGTH_SHORT
+        )
+            .setAnimationMode(ANIMATION_MODE_SLIDE)
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.secondary))
+            .show()
     }
 
     private fun setNavigationUpListener() {
@@ -181,6 +189,7 @@ class MovieFragment : Fragment() {
         val chip: Chip =
             inflater.inflate(R.layout.category_chip, binding.detailMovieGenres, false) as Chip
         chip.text = genre.name
+        chip.isCheckable = false
         return chip
     }
 }

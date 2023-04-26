@@ -65,32 +65,28 @@ class HomeViewModel : ViewModel() {
 
     private fun getPopularMovies() {
         coroutineScope.launch {
-            try {
-                _status.value = ApiStatus.LOADING
-                val movies = MovieApi.retrofitService.getMovies(POPULAR, BuildConfig.TOKEN, 1)
-                _movies.value = movies
-                _status.value = ApiStatus.DONE
-                Log.d("TAG", movies.toString())
-            } catch (t: Throwable) {
-                _status.value = ApiStatus.ERROR
-                Log.e("TAG", t.toString())
-            }
+            _movies.value = retrieveMovies(POPULAR)
         }
     }
 
     private fun getUpcomingMovies() {
         coroutineScope.launch {
-            try {
-                _status.value = ApiStatus.LOADING
-                val movies = MovieApi.retrofitService.getMovies(UPCOMING, BuildConfig.TOKEN, 1)
-                _upcomingMovies.value = movies
-                _status.value = ApiStatus.DONE
-                Log.d("TAG", movies.toString())
-            } catch (t: Throwable) {
-                _status.value = ApiStatus.ERROR
-                Log.e("TAG", t.toString())
-            }
+            _upcomingMovies.value = retrieveMovies(UPCOMING)
         }
+    }
+
+    private suspend fun retrieveMovies(movieType: String): Movies? {
+        return try {
+            _status.value = ApiStatus.LOADING
+            val movies = MovieApi.retrofitService.getMovies(movieType, BuildConfig.TOKEN, 1)
+            _status.value = ApiStatus.DONE
+            movies
+        } catch (t: Throwable) {
+            _status.value = ApiStatus.ERROR
+            Log.e("TAG", t.toString())
+            null
+        }
+
     }
 
     override fun onCleared() {
