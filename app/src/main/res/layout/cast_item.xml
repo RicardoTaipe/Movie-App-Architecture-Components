@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/cast_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
@@ -45,7 +45,7 @@
 
         <TextView
             android:id="@+id/cast_character"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@{cast.character}"
