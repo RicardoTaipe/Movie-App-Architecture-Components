@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.example.moviearchitecturecomponents.R
 import com.example.moviearchitecturecomponents.databinding.FragmentHomeBinding
 import com.example.moviearchitecturecomponents.network.response.Result
 import com.example.moviearchitecturecomponents.ui.home.MoviesAdapter.MoviesAdapterListener
@@ -20,7 +19,6 @@ import com.example.moviearchitecturecomponents.ui.home.slide.SlideAdapter.Slider
 import com.example.moviearchitecturecomponents.ui.movie.ApiStatus
 import com.example.moviearchitecturecomponents.util.ZoomOutPageTransformer
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.transition.MaterialElevationScale
 
 
 class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
@@ -116,40 +114,20 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
     }
 
     override fun onMovieClicked(movie: Result, imageView: ImageView) {
-
-        applyTransitions()
         moveToMoviePage(movie, imageView)
 
     }
 
     override fun onMovieSlideClicked(movie: Result, imageView: ImageView) {
-
-        applyTransitions()
         moveToMoviePage(movie, imageView)
-
     }
 
     private fun moveToMoviePage(movie: Result, imageView: ImageView) {
-        findNavController()
-            .navigate(
+        findNavController().navigate(
                 HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
                     movie
-                ),
-                FragmentNavigatorExtras(imageView to movie.id.toString())
+                ), FragmentNavigatorExtras(imageView to movie.id.toString())
             )
-    }
-
-
-    //TODO Fix transitions for all pages
-    private fun applyTransitions() {
-
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = resources.getInteger(R.integer.material_motion_duration_long_1).toLong()
-        }
-
-        reenterTransition = MaterialElevationScale(true).apply {
-            duration = resources.getInteger(R.integer.material_motion_duration_long_1).toLong()
-        }
     }
 
 }
