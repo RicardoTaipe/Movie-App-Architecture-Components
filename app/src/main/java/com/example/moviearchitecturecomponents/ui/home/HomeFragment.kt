@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.ViewGroupCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,8 +42,6 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
             homeViewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        ViewGroupCompat.setTransitionGroup(binding.popularMovies as ViewGroup, true)
-        ViewGroupCompat.setTransitionGroup(binding.upcomingMovies as ViewGroup, true)
         return binding.root
     }
 
