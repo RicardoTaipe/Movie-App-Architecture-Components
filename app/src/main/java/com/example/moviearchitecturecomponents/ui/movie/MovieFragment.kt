@@ -145,10 +145,10 @@ class MovieFragment : Fragment() {
             val params = binding.detailMovieDesc.layoutParams
             val text = if (isChecked) {
                 params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
-                R.string.Less
+                R.string.show_less
             } else {
                 params.height = initialHeight
-                R.string.More
+                R.string.show_more
             }
             binding.toggleDescription.text = getString(text)
             binding.detailMovieDesc.layoutParams = params

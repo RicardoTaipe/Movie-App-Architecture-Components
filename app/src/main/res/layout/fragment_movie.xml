@@ -71,7 +71,7 @@
                 android:button="@android:color/transparent"
                 android:checked="false"
                 android:textAlignment="textEnd"
-                android:text="More"
+                android:text="@string/show_more"
                 android:textColor="@color/secondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detail_movie_desc" />

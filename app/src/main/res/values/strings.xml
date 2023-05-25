@@ -8,8 +8,8 @@
     <string name="upcoming_movies">Upcoming</string>
     <string name="cast">Cast</string>
     <string name="movie_image">movie_image</string>
-    <string name="Less">Less</string>
-    <string name="More">More</string>
+    <string name="show_less">Show Less</string>
+    <string name="show_more">Show More</string>
     <string name="ADDED_TO_FAVORITES">ADDED TO FAVORITES</string>
     <string name="REMOVED_FROM_FAVORITES">REMOVED FROM FAVORITES</string>
 </resources>
