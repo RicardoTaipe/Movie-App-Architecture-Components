@@ -12,4 +12,7 @@
     <string name="show_more">Show More</string>
     <string name="ADDED_TO_FAVORITES">ADDED TO FAVORITES</string>
     <string name="REMOVED_FROM_FAVORITES">REMOVED FROM FAVORITES</string>
+    <string name="play_trailer">play trailer</string>
+    <string name="duration">duration</string>
+    <string name="go_back">go back</string>
 </resources>

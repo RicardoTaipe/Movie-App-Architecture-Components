@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -78,7 +79,7 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieViewModel.getMovieDetail(selectedMovie?.id!!)
-        //ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
+        ViewCompat.setTransitionName(binding.detailMovieImage, selectedMovie?.id.toString())
         binding.cast.adapter = castAdapter
         setUpCastObserver()
         setNavigationUpListener()
@@ -105,8 +106,7 @@ class MovieFragment : Fragment() {
             if (id.isBlank()) {
                 Toast.makeText(context, "No video available", Toast.LENGTH_SHORT).show()
             } else {
-                VideoPlayerFragment.newInstance(id)
-                    .show(parentFragmentManager, "dialog")
+                VideoPlayerFragment.newInstance(id).show(parentFragmentManager, "dialog")
             }
         }
     }
@@ -128,10 +128,8 @@ class MovieFragment : Fragment() {
             requireActivity().findViewById(R.id.container),
             getString(message),
             Snackbar.LENGTH_SHORT
-        )
-            .setAnimationMode(ANIMATION_MODE_SLIDE)
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.secondary))
-            .show()
+        ).setAnimationMode(ANIMATION_MODE_SLIDE)
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.secondary)).show()
     }
 
     private fun setNavigationUpListener() {
@@ -179,10 +177,11 @@ class MovieFragment : Fragment() {
 
     private fun generateChip(genre: Genre): Chip {
         val inflater = LayoutInflater.from(binding.detailMovieGenres.context)
-        val chip: Chip =
-            inflater.inflate(R.layout.category_chip, binding.detailMovieGenres, false) as Chip
-        chip.text = genre.name
-        chip.isCheckable = false
-        return chip
+        return (inflater.inflate(
+            R.layout.category_chip, binding.detailMovieGenres, false
+        ) as Chip).apply {
+            text = genre.name
+            isCheckable = false
+        }
     }
 }

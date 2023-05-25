@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.core.view.ViewGroupCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.moviearchitecturecomponents.R
@@ -25,9 +25,7 @@ import com.google.android.material.transition.MaterialElevationScale
 
 class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
 
-    private val homeViewModel: HomeViewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -79,10 +77,12 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
                     loadingIndicator.visibility = View.VISIBLE
                     homeContainer.visibility = View.GONE
                 }
+
                 ApiStatus.DONE -> binding.apply {
                     loadingIndicator.visibility = View.GONE
                     homeContainer.visibility = View.VISIBLE
                 }
+
                 ApiStatus.ERROR -> binding.apply {
                     loadingIndicator.visibility = View.VISIBLE
                     homeContainer.visibility = View.GONE
@@ -131,8 +131,10 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
 
     private fun moveToMoviePage(movie: Result, imageView: ImageView) {
         findNavController()
-            .navigate(HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
-                movie),
+            .navigate(
+                HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
+                    movie
+                ),
                 FragmentNavigatorExtras(imageView to movie.id.toString())
             )
     }

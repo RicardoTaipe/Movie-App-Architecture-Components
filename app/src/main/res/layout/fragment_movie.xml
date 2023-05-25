@@ -27,7 +27,8 @@
             <ImageView
                 android:id="@+id/detail_background_movie"
                 android:layout_width="0dp"
-                android:layout_height="245dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="4:3"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +53,6 @@
                 android:layout_width="125dp"
                 android:layout_height="175dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 app:imageUrl="@{viewmodel.movie.posterPath}"
                 android:contentDescription="@string/movie_image"
                 android:scaleType="centerCrop"
@@ -86,6 +86,7 @@
                 android:layout_marginRight="16dp"
                 android:text="@{viewmodel.movie.originalTitle}"
                 android:textColor="@color/white"
+                android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/detail_movie_image"
                 app:layout_constraintTop_toBottomOf="@id/detail_background_movie"
@@ -111,22 +112,21 @@
                 android:id="@+id/clock_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toStartOf="@id/detail_movie_runtime"
                 app:layout_constraintStart_toEndOf="@id/detail_movie_image"
                 app:layout_constraintTop_toBottomOf="@id/detail_movie_release_date"
                 app:srcCompat="@android:drawable/ic_menu_recent_history"
-                app:tint="@color/secondary" />
+                app:tint="@color/secondary"
+                android:contentDescription="@string/duration" />
 
             <TextView
                 android:id="@+id/detail_movie_runtime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:textColor="@color/white"
                 android:text="@{viewmodel.formattedRuntime}"
                 app:layout_constraintBottom_toBottomOf="@id/clock_icon"
@@ -168,11 +168,13 @@
                 android:id="@+id/play_movie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#8DBA8A00"
                 app:layout_constraintBottom_toBottomOf="@+id/detail_background_movie"
                 app:layout_constraintEnd_toEndOf="@+id/detail_background_movie"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_media_play" />
+                app:srcCompat="@android:drawable/ic_media_play"
+                android:contentDescription="@string/play_trailer" />
 
             <TextView
                 android:id="@+id/cast_title"
@@ -209,12 +211,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="?attr/homeAsUpIndicator"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                android:contentDescription="@string/go_back" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/favorite"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:button="@drawable/ic_baseline_favorite_24"
