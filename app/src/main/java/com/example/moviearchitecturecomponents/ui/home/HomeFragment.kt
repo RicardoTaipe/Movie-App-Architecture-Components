@@ -111,20 +111,20 @@ class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
     }
 
     override fun onMovieClicked(movie: Result, imageView: ImageView) {
-        moveToMoviePage(movie, imageView)
-
-    }
-
-    override fun onMovieSlideClicked(movie: Result, imageView: ImageView) {
-        moveToMoviePage(movie, imageView)
-    }
-
-    private fun moveToMoviePage(movie: Result, imageView: ImageView) {
         findNavController().navigate(
-                HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
-                    movie
-                ), FragmentNavigatorExtras(imageView to movie.id.toString())
+            HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
+                movie
+            ), FragmentNavigatorExtras(imageView to movie.id.toString())
+        )
+
+    }
+
+    override fun onMovieSlideClicked(movie: Result) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionNavigationHomeToNavigationMovie(
+                movie
             )
+        )
     }
 
 }

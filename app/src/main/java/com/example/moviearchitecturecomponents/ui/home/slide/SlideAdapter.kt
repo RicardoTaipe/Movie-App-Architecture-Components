@@ -2,7 +2,6 @@ package com.example.moviearchitecturecomponents.ui.home.slide
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,7 @@ class SlideAdapter(private val clickListener: SliderAdapterListener) :
     ListAdapter<Result, SlideAdapter.ViewHolder>(ResultDiffCallback) {
 
     interface SliderAdapterListener {
-        fun onMovieSlideClicked(movie: Result, imageView: ImageView)
+        fun onMovieSlideClicked(movie: Result)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +36,7 @@ class SlideAdapter(private val clickListener: SliderAdapterListener) :
                 ViewCompat.setTransitionName(slideImage, slide.id.toString())
 
                 root.setOnClickListener {
-                    clickListener.onMovieSlideClicked(slide, binding.slideImage)
+                    clickListener.onMovieSlideClicked(slide)
                 }
 
                 executePendingBindings()
