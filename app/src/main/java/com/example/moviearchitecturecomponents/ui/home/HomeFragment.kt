@@ -23,8 +23,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.transition.MaterialElevationScale
 
 
-//TODO https://www.behance.net/gallery/83595081/Photo-Play-UI-Kit-For-FREE REDESIGN APP
-//https://freebiesui.com/figma-freebies/figma-app-designs/streaming-videos-app-ui-kit/
 class HomeFragment : Fragment(), MoviesAdapterListener, SliderAdapterListener {
 
     private val homeViewModel: HomeViewModel by lazy {
